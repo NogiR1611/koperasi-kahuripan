@@ -1,21 +1,32 @@
 {
-  "name": "sistem-prediksi-harga-cabai-rawit",
+  "name": "koperasi_hurip_sabilulungan_frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^6.1.1",
+    "@fortawesome/fontawesome-free": "^5.15.3",
+    "@popperjs/core": "^2.9.1",
+    "@tailwindcss/forms": "^0.2.1",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
+    "chart.js": "^2.9.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-number-format": "^4.5.3",
+    "react-responsive-modal": "^6.0.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run watch:css && craco start",
+    "build": "npm run build:css && craco build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "craco src/index.css -o src/assets/style/tailwind.css",
+    "watch:css": "craco src/index.css -o src/assets/style/tailwind.css"
   },
   "eslintConfig": {
     "extends": [
@@ -34,5 +45,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.0.4",
+    "autoprefixer": "^9.8.6",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.4"
   }
 }
