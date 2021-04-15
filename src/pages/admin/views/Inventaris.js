@@ -1,6 +1,8 @@
 import React from "react";
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
+import SuccessMessage from "./../components/Notification/SuccessMessage.js";
+import ErrorMessage from "./../components/Notification/ErrorMessage.js";
  
 // components
 
@@ -10,6 +12,7 @@ export default function Inventaris() {
   const [open,setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+  const [Notification,setNotification] = React.useState("");
 
   return (
     <>
@@ -17,6 +20,8 @@ export default function Inventaris() {
         <div className="w-full mb-12 px-4">
         <Modal open={open} onClose={onCloseModal}>
             <div className="w-full max-w-md">
+              {Notification === "berhasil" ? <SuccessMessage /> : null}
+              {Notification === "gagal" ? <ErrorMessage /> : null}
               <h3 className="text-center">Tambah Inventaris</h3>
               <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Nama Barang : </label>
@@ -47,6 +52,17 @@ export default function Inventaris() {
                 alt=""
             />
             Tambah
+          </button>
+          <button
+              className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 rounded inline-flex items-center"
+              type="button"
+          >
+          <img 
+              src={require("./../../../assets/admin/icon/pdf.png").default}
+              className="w-btn-add mr-1"
+              alt=""
+          />
+            Generate PDF
           </button>
           <CardTableInventaris color="light" />
         </div>

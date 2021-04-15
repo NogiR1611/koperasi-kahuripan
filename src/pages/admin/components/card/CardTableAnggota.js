@@ -1,9 +1,22 @@
 import React from 'react';
-
+import {format} from 'date-fns';
+import axios from 'axios';
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTableAnggota({ color }){
+    const [anggota,setAnggota] = React.useState([]);
+    React.useEffect(() => {
+        axios.get('http://localhost:8000/api/anggota/lihat')
+        .then( res => {
+            const {data} = res.data;
+            console.log(data);
+            setAnggota(data);
+        })
+        .catch( err => {
+            console.log(err);
+        })
+    },[]);
     return (
         <>
             <div
@@ -58,16 +71,6 @@ export default function CardTableAnggota({ color }){
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                     }
                                 >
-                                
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
                                 Nama Anggota
                                 </th>
                                 <th
@@ -82,6 +85,53 @@ export default function CardTableAnggota({ color }){
                                 </th>
                             </tr> 
                         </thead>
+                        <tbody>
+                            {anggota.map((element,index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.id}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.nama_anggota}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {format(new Date(element.createdAt),"dd-MM-yyyy")}
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>

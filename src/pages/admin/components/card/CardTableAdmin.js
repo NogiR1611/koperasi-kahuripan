@@ -1,15 +1,14 @@
 import React from 'react';
-import MonthDropdown from './../dropdown/MonthDropdown.js';
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
-export default function CardTableSimpananManasuka({ color }){
+export default function CardTableAdmin({ color }){
     return (
         <>
             <div
                 className={
-                "relative flex flex-col min-w-0 break-words w-full mt-3 mb-6 shadow-lg rounded " +
+                "relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded " +
                 (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
                 }
             >
@@ -17,12 +16,12 @@ export default function CardTableSimpananManasuka({ color }){
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                         <h3
-                            className={ 
+                            className={
                             "font-semibold text-lg " +
                             (color === "light" ? "text-blueGray-700" : "text-white")
                             }
                         >
-                        Daftar Simpanan Manasuka Per Bulan : <MonthDropdown /> 
+                            Data Admin
                         </h3>
                         </div>
                     </div>
@@ -49,7 +48,7 @@ export default function CardTableSimpananManasuka({ color }){
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                     }
                                 >
-                                No.Anggota
+                                Nama Admin
                                 </th>
                                 <th
                                     className={
@@ -59,47 +58,7 @@ export default function CardTableSimpananManasuka({ color }){
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                     }
                                 >
-                                Nama
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                S/D Bulan lalu
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Bulan ini
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Dasos
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Total Simpanan
+                                Tanggal Pendaftaran
                                 </th>
                             </tr>
                         </thead>

@@ -1,9 +1,20 @@
 import React from 'react';
+import axios from 'axios';
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTableKolektor({ color }){
+    const [kolektor,setKolektor] = React.useState([]);
+    React.useEffect(() => {
+        axios.get("http://localhost:8000/api/kolektor/lihat")
+        .then( res => {
+            const {data} = res.data;
+            setKolektor(data);
+        })
+        .catch( err => console.log(err))
+    });
+
     return (
         <>
             <div
@@ -68,10 +79,58 @@ export default function CardTableKolektor({ color }){
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                     }
                                 >
-                                Jumlah Anggota
+                                Jumlah Diterima
                                 </th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {kolektor.map((element,index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                        >
+                                        {element.id}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        {element.nama_kolektor}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        {element.anggota}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        {element.jumlah_diterima}
+                                        </td>
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>

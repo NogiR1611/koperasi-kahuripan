@@ -10,7 +10,7 @@ export default function Navbar() {
     let parseMonth = date.getMonth();
     let parseYear = date.getFullYear();
     let month = ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
-    let day = ["Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu","Minggu"];
+    let day = ["Minggu","Senin","Selasa","Rabu","Kamis","Jum'at","Sabtu"];
 
     document.getElementById("date").innerHTML = day[thisDay] + "," + parseDate + " " + month[parseMonth] + " " + parseYear;
   });

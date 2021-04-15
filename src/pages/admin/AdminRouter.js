@@ -16,6 +16,7 @@ import Setoran from './views/Setoran.js';
 import TotalPinjaman from './views/TotalPinjaman.js';
 import Anggota from './views/Anggota.js';
 import Kolektor from './views/Kolektor.js';
+import DataAdmin from './views/Admin.js';
 import TotalAnggota from './views/TotalAnggota.js';
 import BagiSHU from './views/BagiSHU.js';
 import Rekap from './views/Rekap.js';
@@ -53,6 +54,7 @@ function Admin(){
                     <PrivateRoute path='/admin/total-pinjaman' restricted={true} component={TotalPinjaman} />
                     <PrivateRoute path='/admin/anggota' restricted={true} component={Anggota} />
                     <PrivateRoute path='/admin/kolektor' restricted={true} component={Kolektor} />
+                    <PrivateRoute path='/admin/data-admin' restricted={true} component={DataAdmin} />
                     <PrivateRoute path='/admin/total-anggota' restricted={true} component={TotalAnggota} />
                     <PrivateRoute path='/admin/shu' restricted={true} component={BagiSHU} />
                     <PrivateRoute path='/admin/inventaris' restricted={true} component={Inventaris} />
