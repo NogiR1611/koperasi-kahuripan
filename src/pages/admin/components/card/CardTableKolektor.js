@@ -1,5 +1,5 @@
 import React from 'react';
-import axios from 'axios';
+import client from '../../../../client'
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function CardTableKolektor({ color }){
     const [kolektor,setKolektor] = React.useState([]);
     React.useEffect(() => {
-        axios.get("http://localhost:8000/api/kolektor/lihat")
+        client.get("kolektor/lihat")
         .then( res => {
             const {data} = res.data;
             setKolektor(data);

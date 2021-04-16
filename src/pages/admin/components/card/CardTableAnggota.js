@@ -1,13 +1,13 @@
 import React from 'react';
 import {format} from 'date-fns';
-import axios from 'axios';
+import client from '../../../../client'
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTableAnggota({ color }){
     const [anggota,setAnggota] = React.useState([]);
     React.useEffect(() => {
-        axios.get('http://localhost:8000/api/anggota/lihat')
+        client.get('anggota/lihat')
         .then( res => {
             const {data} = res.data;
             console.log(data);

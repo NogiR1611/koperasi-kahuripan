@@ -33,6 +33,8 @@ import '../../assets/style/tailwind.css';
 
 
 function Admin(){
+    React.useEffect(() => window.scrollTo({ top: 0 }))
+    
     return (
         <>
             <Sidebar />

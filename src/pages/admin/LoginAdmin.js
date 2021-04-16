@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import axios from 'axios';
+import client from '../../client';
 
 const LoginAdmin = (props) => {
     const [username,setUsername] = useState('');
@@ -12,7 +12,7 @@ const LoginAdmin = (props) => {
             username : username,
             password : password
         };
-        axios.post('http://localhost:8000/api/admin/login',data)
+        client.post('user/login',data)
         .then( res => {
             if(res.status === 200){
                 let user = {

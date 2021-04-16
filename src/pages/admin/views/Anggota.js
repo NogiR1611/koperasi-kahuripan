@@ -8,6 +8,7 @@ import {Modal} from "react-responsive-modal";
 
 import CardTableAnggota from "../components/card/CardTableAnggota.js";
 import axios from "axios";
+import client from "../../../client";
 
 export default function Anggota() {
   const [anggota,setAnggota] = React.useState('');
@@ -22,7 +23,7 @@ export default function Anggota() {
       nama_anggota : anggota,
       kolektor : kolektor
     };
-    axios.post('http://localhost:8000/api/anggota/tambah',data)
+    client.post('anggota/tambah',data)
     .then( res => {
       setNotification("berhasil");
     })
@@ -32,7 +33,7 @@ export default function Anggota() {
   }
 
   React.useEffect(() => {
-    axios.get('http://localhost:8000/api/anggota/lihat')
+    client.get('anggota/lihat')
     .then( res => {
         const {data} = res.data;
         setItem(data);

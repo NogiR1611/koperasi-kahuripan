@@ -9,6 +9,7 @@ import axios from "axios";
 // components
 
 import CardTableKolektor from "../components/card/CardTableKolektor.js";
+import client from "../../../client";
  
 export default function Kolektor() {
   const [item,setItem] = React.useState([]);
@@ -33,7 +34,7 @@ export default function Kolektor() {
       alert("harap samakan password dengan konfirmasi password!")
     }
     else{
-      axios.post("http://localhost:8000/api/kolektor/tambah",data)
+      client.post("kolektor/tambah",data)
       .then( res => {
         setNotification("berhasil");
       })
@@ -44,7 +45,7 @@ export default function Kolektor() {
   }
 
   React.useEffect(() => {
-    axios.get("http://localhost:8000/api/kolektor/lihat")
+    client.get("kolektor/lihat")
     .then( res => {
       const {data} = res.data;
       setItem(data);

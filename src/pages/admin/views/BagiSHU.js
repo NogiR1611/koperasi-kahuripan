@@ -5,6 +5,7 @@ import React from "react";
 import CardTableBagiSHU from "../components/card/CardTableBagiSHU.js";
 
 export default function BagiSHU() {
+
   return (
     <>
       <div className="flex flex-wrap mt-4">

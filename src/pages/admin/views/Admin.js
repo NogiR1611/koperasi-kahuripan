@@ -10,7 +10,7 @@ export default function DataAdmin() {
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
     const [Notification,setNotification] = React.useState("");
-    
+
     return (
         <>
         <div className="flex flex-wrap mt-4">
