@@ -5,7 +5,7 @@ import { format } from "date-fns";
 const anggotaPDF = items => {
     // initialize jsPDF
     const doc = new jsPDF();
-  
+   
     // define the columns we want and their titles
     const tableColumn = ["No","Nama Anggota","Tanggal Pendaftaran"];
     // define an empty array of rows

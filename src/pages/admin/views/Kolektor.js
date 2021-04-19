@@ -67,7 +67,7 @@ export default function Kolektor() {
               <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                   <label className="block">
-                    <span className="text-gray-700 text-sm font-bold mb-2">Nama Anggota</span>
+                    <span className="text-gray-700 text-sm font-bold mb-2">Nama Anggota : </span>
                     <select className="form-select mt-1 block w-full rounded-lg" onChange={ (e) => setKolektor(e.target.value)} value={kolektor}>
                       <option value=""></option>
                       <option value="sadikin">Ny.Sadikin</option>

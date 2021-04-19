@@ -32,7 +32,7 @@ export default function CardTableAngsuran({ color }){
                             <tr>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -42,7 +42,7 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -52,7 +52,7 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -62,7 +62,7 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -72,7 +72,7 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -80,20 +80,9 @@ export default function CardTableAngsuran({ color }){
                                 >
                                 Angsuran Pokok
                                 </th>
-                                
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Bunga
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -103,7 +92,17 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 font-bold text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                    }
+                                >
+                                Sisa Pinjaman Bulan ini
+                                </th>
+                                <th
+                                    className={
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -113,7 +112,7 @@ export default function CardTableAngsuran({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")

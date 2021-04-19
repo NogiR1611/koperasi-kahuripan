@@ -1,7 +1,21 @@
 import React from 'react';
+import client from '../../../../client.js';
+import {format} from 'date-fns';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
 
 export default function CardTableTotalSimpanan({ color }){
+    const [Items,setItems] = React.useState([]);
+    const [month,setMonth] = React.useState(1);
+
+    React.useEffect(() => {
+        client.get('/api/simpanan?with=user;type&orderBy=user_id%20asc')
+        .then( res => {
+        const {data} = res.data;
+        setItems(data);
+        })
+        .catch( err => console.log(err));
+    },[]);
+
     return (
         <>
             <div
@@ -19,7 +33,7 @@ export default function CardTableTotalSimpanan({ color }){
                             (color === "light" ? "text-blueGray-700" : "text-white")
                             }
                         >
-                            Laporan Total Simpanan Anggota Per Bulan : <MonthDropdown />
+                            Laporan Total Simpanan Anggota Per Bulan : <MonthDropdown monthChange={(e) => setMonth(e.target.value)} monthValue={month} />
                         </h3>
                         </div>
                     </div>
@@ -31,7 +45,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -42,7 +56,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -53,7 +67,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -64,7 +78,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -75,7 +89,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     colspan="3"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -86,7 +100,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     colspan="3"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -97,7 +111,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -108,7 +122,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 <th
                                     rowspan="2"
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -120,7 +134,7 @@ export default function CardTableTotalSimpanan({ color }){
                             <tr>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -130,7 +144,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -140,7 +154,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -150,7 +164,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -160,7 +174,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -170,7 +184,7 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -180,6 +194,102 @@ export default function CardTableTotalSimpanan({ color }){
                                 </th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {Items.filter( element =>
+                                format(new Date(element.created_at),"MM") === month && element.type.name === "Simpanan Wajib" )
+                            .map( (element,index) => {
+                                return (
+                                <tr>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                    {index + 1}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.user.name}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {10000}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.amount}
+                                    </td>
+                                </tr>
+                                )
+                            })}
+                            {Items.filter( element => 
+                                format(new Date(element.created_at),"MM") === month && element.type.name === "Simpanan Manasuka"    
+                            )
+                            .map( element => {
+                                return (
+                                    <tr>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        {element.amount}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                        </td>
+                                    </tr>
+                                )
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>

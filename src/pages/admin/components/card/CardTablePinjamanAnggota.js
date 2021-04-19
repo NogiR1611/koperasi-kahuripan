@@ -1,9 +1,11 @@
 import React from 'react';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
+
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTablePinjamanAnggota({ color }){
+
     return (
         <>
             <div
@@ -32,7 +34,7 @@ export default function CardTablePinjamanAnggota({ color }){
                             <tr>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -42,7 +44,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -52,7 +54,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -62,7 +64,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -72,7 +74,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -82,7 +84,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -92,7 +94,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -102,7 +104,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -112,7 +114,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -122,7 +124,7 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -132,6 +134,8 @@ export default function CardTablePinjamanAnggota({ color }){
                                 </th>
                             </tr>
                         </thead>
+                        <tbody>
+                        </tbody>
                     </table>
                 </div>
             </div>

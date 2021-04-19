@@ -12,7 +12,12 @@ export default function PinjamanAnggota() {
   const [open,setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+  const [jumlahPinjaman,setJumlahPinjaman] = React.useState(0);
+  const [provisi,setProvisi] = React.useState(0);
+  const [sukarela,setSukarela] = React.useState(0);
   const [Notification,setNotification] = React.useState("");
+  
+  //let's call your API
   
   return (
     <>
@@ -34,13 +39,34 @@ export default function PinjamanAnggota() {
                     </select>
                   </label>
                   <label className="block text-gray-700 font-bold">Jumlah Pinjaman : </label>
-                  <NumberFormat thousandSeparator={true} prefix={'Rp.'} />
+                  <NumberFormat
+                    thousandSeparator={true}
+                    prefix={'Rp.'}
+                    value={jumlahPinjaman}
+                    onValueChange={ (values) => {
+                      const {value} = values;
+                      setJumlahPinjaman(value)} 
+                  }/>
                   <label className="block text-gray-700 font-bold">Provisi : </label>
-                  <NumberFormat thousandSeparator={true} prefix={'Rp.'} />
+                  <NumberFormat
+                    thousandSeparator={true}
+                    prefix={'Rp.'}
+                    value={provisi}
+                    onValueChange={ (values) => {
+                      const {value} = values;
+                      setProvisi(value)} 
+                  }/>
                   <label className="block text-gray-700 font-bold">Sukarela : </label>
-                  <NumberFormat thousandSeparator={true} prefix={'Rp.'} />
+                  <NumberFormat
+                    thousandSeparator={true}
+                    prefix={'Rp.'}
+                    value={sukarela}
+                    onValueChange={ (values) => {
+                      const {value} = values;
+                      setSukarela(value)} 
+                  }/>
                   <label className="block text-gray-700 font-bold">Keterangan : </label>
-                  <textarea cols="25" rows="5" name="jumlah pinjaman" id="" />
+                  <textarea cols="25" rows="5" name="keterangan" id="" />
                 </div>
                 <div className="flex items-center justify-between">
                   <button className="w-full bg-blue-500 transition duration-450 ease-in-out hover:bg-blue-700 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">

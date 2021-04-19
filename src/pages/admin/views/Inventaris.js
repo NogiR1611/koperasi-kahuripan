@@ -3,7 +3,9 @@ import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
 import SuccessMessage from "./../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../components/Notification/ErrorMessage.js";
- 
+import {format} from "date-fns";
+import axios from "axios"; 
+import client from "../../../client.js";
 // components
 
 import CardTableInventaris from "../components/card/CardTableInventaris.js";
@@ -12,7 +14,30 @@ export default function Inventaris() {
   const [open,setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
+  const [namaBarang,setNamaBarang] = React.useState("");
+  const [jumlah,setJumlah] = React.useState(0);
+  const [date,setDate] = React.useState(format(new Date(),"yyyy-MM-dd"));
+  const [kondisi,setKondisi] = React.useState("");
+  const [posisi,setPosisi] = React.useState("");
   const [Notification,setNotification] = React.useState("");
+
+  const onSubmit = () => {
+    const data = {
+      nama_inventaris : namaBarang,
+      jumlah : jumlah,
+      tanggal_pembelian : date,
+      kondisi : kondisi,
+      posisi : posisi
+    };
+
+    client.post('/api/inventaris',data)
+    .then( res => {
+      setNotification("berhasil");
+    })
+    .catch( err => {
+      setNotification("gagal");
+    });
+  }
 
   return (
     <>
@@ -25,17 +50,21 @@ export default function Inventaris() {
               <h3 className="text-center">Tambah Inventaris</h3>
               <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Nama Barang : </label>
-                <input type="text" name="" id="" />
+                <input type="text" value={namaBarang} onChange={ (e) => setNamaBarang(e.target.value) } name="" id="" />
                 <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah : </label>
-                <input type="number" name="" id="" />
+                <input type="number" value={jumlah} onChange={ (e) => setJumlah(e.target.value) } name="" id="" />
                 <label className="block text-gray-700 text-sm font-bold mb-2">Tanggal Pembelian : </label>
-                <input type="date" name="tanggal_bayar" />
+                <input type="date" value={date} onChange={ (e) => setDate(e.target.value) } />
                 <label className="block text-gray-700 text-sm font-bold mb-2">Kondisi : </label>
-                <input type="text" name="" id="" />
+                <input type="text" value={kondisi} onChange={ (e) => setKondisi(e.target.value) } name="" id="" />
                 <label className="block text-gray-700 text-sm font-bold mb-2">Posisi : </label>
-                <input type="text" name="" id="" />
+                <input type="text" value={posisi} onChange={ (e) => setPosisi(e.target.value) } name="" id="" />
                 <div className="flex items-center justify-between">
-                  <button className="w-full bg-blue-500 transition duration-450 ease-in-out hover:bg-blue-700 font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                  <button
+                    className="w-full bg-blue-500 transition duration-450 ease-in-out hover:bg-blue-700 font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                    type="button"
+                    onClick={onSubmit}
+                  >
                     Tambah
                   </button>
                 </div>

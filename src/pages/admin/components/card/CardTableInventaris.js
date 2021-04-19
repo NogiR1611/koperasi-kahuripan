@@ -1,9 +1,22 @@
 import React from 'react';
-
+import client from '../../../../client.js';
+import {format} from 'date-fns';
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTableInventaris({ color }){
+    const [Items,setItems] = React.useState([]);
+
+    React.useEffect(() => {
+        client.get('/api/inventaris')
+        .then( res => {
+            const {data} = res.data;
+            console.log(res);
+            setItems(data);
+        })
+        .catch( err => console.log(err));
+    },[]);
+    
     return (
         <>
             <div
@@ -32,7 +45,7 @@ export default function CardTableInventaris({ color }){
                             <tr>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -42,7 +55,7 @@ export default function CardTableInventaris({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -52,7 +65,7 @@ export default function CardTableInventaris({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -62,7 +75,7 @@ export default function CardTableInventaris({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -72,7 +85,7 @@ export default function CardTableInventaris({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -82,7 +95,7 @@ export default function CardTableInventaris({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -92,6 +105,74 @@ export default function CardTableInventaris({ color }){
                                 </th>
                             </tr>
                         </thead>
+                        <tbody>
+                            {Items.map( (element,index) => {
+                                return (
+                                    <tr>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {index + 1}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.nama_inventaris}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.jumlah}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {format(new Date(element.tanggal_pembelian),"dd-MM-yyyy")}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.kondisi}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            {element.posisi}
+                                        </td>      
+                                    </tr>
+                                );
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>

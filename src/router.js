@@ -10,8 +10,8 @@ function Router(){
         <BrowserRouter>
             <Switch>
                 <Route exact path='/login' component={LoginAdmin} />
-                <PrivateRoute path='/'  restricted={true} component={Admin} />
-                <PrivateRoute path='/admin'  restricted={true} component={Admin} />
+                <PrivateRoute path='/' restricted={true} component={Admin} />
+                <PrivateRoute path='/admin' restricted={true} component={Admin} />
             </Switch>
         </BrowserRouter>
         );

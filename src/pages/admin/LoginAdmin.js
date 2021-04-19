@@ -1,9 +1,11 @@
 import React,{useState} from 'react';
+import FailedLogin from './../admin/components/Notification/FailedLogin.js';
 import client from '../../client';
 
 const LoginAdmin = (props) => {
     const [username,setUsername] = useState('');
     const [password,setPassword] = useState('');
+    const [notification,setNotification] = useState('');
     const [isLoggedIn,setIsLoggedIn] = useState(false);
     
     const onSubmit = (event) => {
@@ -12,7 +14,7 @@ const LoginAdmin = (props) => {
             username : username,
             password : password
         };
-        client.post('user/login',data)
+        client.post('api/user/login',data)
         .then( res => {
             if(res.status === 200){
                 let user = {
@@ -25,7 +27,9 @@ const LoginAdmin = (props) => {
                 setIsLoggedIn(!isLoggedIn);
             }
         })
-        .catch( err => console.log(err));
+        .catch( err => {
+            setNotification("gagal");
+        });
     }
 
     return (
@@ -37,6 +41,7 @@ const LoginAdmin = (props) => {
                     Login
                 </h2>
                 <span class="text-lg text-gray-400 mx-auto font-bold">Silahkan Masukan Username dan Password Anda</span>
+                { notification === "gagal" ? <FailedLogin /> : null }
                 </div>
                 <form class="mt-8 space-y-6" onSubmit={onSubmit}>
                 <input type="hidden" name="remember" value="true" />

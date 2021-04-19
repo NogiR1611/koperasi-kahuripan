@@ -7,10 +7,25 @@ import ErrorMessage from "./../components/Notification/ErrorMessage.js";
 
 export default function DataAdmin() {
     const [open,setOpen] = React.useState(false);
+    const [kolektor,setKolektor] = React.useState('');
+    const [password,setPassword] = React.useState(''); 
+    const [confirmPassword,setConfirmPassword] = React.useState('');
     const onOpenModal = () => setOpen(true);
     const onCloseModal = () => setOpen(false);
     const [Notification,setNotification] = React.useState("");
 
+    /*
+    if(kolektor === "" || password === ""){
+        alert("harap lengkapi nama anggota dan password")
+      }
+  
+      if(password !== confirmPassword){
+        alert("harap samakan password dengan konfirmasi password!")
+      }
+      else{
+
+      }
+    */
     return (
         <>
         <div className="flex flex-wrap mt-4">
@@ -19,18 +34,38 @@ export default function DataAdmin() {
                     <div className="w-full max-w-md">
                         {Notification === "berhasil" ? <SuccessMessage /> : null}
                         {Notification === "gagal" ? <ErrorMessage /> : null}
-                        <h3 className="text-center">Tambah Inventaris</h3>
+                        <h3 className="text-center">Daftar Admin</h3>
                         <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Nama Barang : </label>
-                        <input type="text" name="" id="" />
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah : </label>
-                        <input type="number" name="" id="" />
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Tanggal Pembelian : </label>
-                        <input type="date" name="tanggal_bayar" />
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Kondisi : </label>
-                        <input type="text" name="" id="" />
-                        <label className="block text-gray-700 text-sm font-bold mb-2">Posisi : </label>
-                        <input type="text" name="" id="" />
+                            <div className="mb-4">
+                                <label className="block">
+                                    <span className="text-gray-700 text-sm font-bold mb-2">Nama Calon Admin : </span>
+                                    <select className="form-select mt-1 block w-full rounded-lg" onChange={ (e) => setKolektor(e.target.value)} value={kolektor}>
+                                    <option value=""></option>
+                                    <option value="sadikin">Ny.Sadikin</option>
+                                    <option value="neneng">Ny.Neneng</option>
+                                    <option value="fina">Ny.Fina</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <div className="mb-6">
+                                <label className="text-gray-700 text-sm font-bold mb-2">Password : </label>
+                                <input onChange={ (e) => setPassword(e.target.value) }
+                                    className="w-full rounded-lg border-2"
+                                    type="password"
+                                    id="password"
+                                    name="password" 
+                                />
+                            </div>
+                            <div className="mb-6">
+                            <label className="text-gray-700 text-sm font-bold mb-2">Konfirmasi Password : </label>
+                            <input
+                                onChange={ (e) => setConfirmPassword(e.target.value) }
+                                className="w-full rounded-lg border-2"
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                            />
+                        </div> 
                         <div className="flex items-center justify-between">
                         <button className="w-full bg-blue-500 transition duration-450 ease-in-out hover:bg-blue-700 font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
                             Tambah

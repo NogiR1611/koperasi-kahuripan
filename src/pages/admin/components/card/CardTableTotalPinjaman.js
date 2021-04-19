@@ -1,7 +1,20 @@
 import React from 'react';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
+import client from './../../../../client.js';
+import { format } from "date-fns";
 
 export default function CardTableTotalPinjaman({ color }){
+    const [month,setMonth] = React.useState(1);
+    const [Data,setData] = React.useState([]);
+    React.useEffect( () => {
+        client.get('/api/pinjaman')
+        .then( res => {
+            const {data} = res.data;
+            setData(data);
+        })
+        .catch( err => console.log(err))
+    },[]);
+
     return (
         <>
             <div
@@ -19,7 +32,7 @@ export default function CardTableTotalPinjaman({ color }){
                             (color === "light" ? "text-blueGray-700" : "text-white")
                             }
                         >
-                            Daftar Total Pinjaman Anggota : <MonthDropdown />
+                            Daftar Total Pinjaman Anggota Per Bulan : <MonthDropdown monthChange={(e) => setMonth(e.target.value)} monthValue={month} />
                         </h3> 
                         </div>
                     </div>
@@ -90,16 +103,6 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Sisa Pinjaman Bulan ini
-                                </th>
-                                <th
-                                    className={
                                         "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
@@ -130,6 +133,77 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                             </tr>
                         </thead>
+                        <tbody>
+                        {Data.filter( element => 
+                            format(new Date(element.amount_date),"MM") === month)
+                            .map( (element,index) => {
+                                return (
+                                <tr>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {index + 1}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.name}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.kolektor}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.amount}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.sukarela}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.provisi}
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                )
+                            })}
+                        </tbody>
                     </table>
                 </div>
             </div>

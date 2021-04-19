@@ -1,22 +1,22 @@
 import React from 'react';
 
-export default function MonthDropdown(){
+export default function MonthDropdown(props){
     return (
         <>
             <label className="inline-block py-0">
-                <select className="form-select text-gray-500 block w-full rounded-lg">
-                    <option>Januari</option>
-                    <option>Februari</option>
-                    <option>Maret</option>
-                    <option>April</option>
-                    <option>Mei</option>
-                    <option>Juni</option>
-                    <option>Juli</option>
-                    <option>Agustus</option>
-                    <option>September</option>
-                    <option>Oktober</option>
-                    <option>November</option>
-                    <option>Desember</option>
+                <select onChange={props.monthChange} value={props.monthValue} className="form-select text-gray-500 block w-full rounded-lg">
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
                 </select>
             </label>
         </>
