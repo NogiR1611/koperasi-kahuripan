@@ -1,5 +1,4 @@
 import React from 'react';
-import timestamp from 'time-stamp';
 import client from './../../../../client';
 
 export default class AjaxTable extends React.Component {
