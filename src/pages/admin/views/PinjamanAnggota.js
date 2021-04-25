@@ -11,8 +11,10 @@ import client from "../../../client";
 import CardTablePinjamanAnggota from "../components/card/CardTablePinjamanAnggota.js";
 
 export default function PinjamanAnggota() {
+  const [installments, setInstallments] = React.useState(null);
   const [open,setOpen] = React.useState(false);
   const [Users,setUsers] = React.useState([]);
+  const [updateData, setUpdateData] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
   const [name,setName] = React.useState(0);
@@ -25,10 +27,17 @@ export default function PinjamanAnggota() {
       user_id : name,
       amount : jumlahPinjaman,
       borrowed_at : date,
+      installments,
     }
 
     client.post('/api/pinjaman',data)
     .then(res => {
+      setName(0);
+      setDate(null);
+      setJumlahPinjaman(null);
+      setInstallments(null);
+      setOpen(false);
+      setUpdateData(true);
       setNotification("berhasil")
     })
     .catch(err => {
@@ -81,6 +90,16 @@ export default function PinjamanAnggota() {
                   }/>
                 </div>
                 <div className="mb-4">
+                  <label className="block text-gray-700 font-bold">Total Angsuran : </label>
+                  <NumberFormat
+                    decimalSeparator={false}
+                    value={installments}
+                    onValueChange={ (values) => {
+                      const {value} = values;
+                      setInstallments(value)} 
+                  }/>
+                </div>
+                <div className="mb-4">
                   <label className="block text-gray-700 font-bold mb-2">Tanggal Pinjam : </label>
                   <input
                     className="w-full"
@@ -121,7 +140,7 @@ export default function PinjamanAnggota() {
             />
             Generate PDF
           </button>
-          <CardTablePinjamanAnggota color="light" />
+          <CardTablePinjamanAnggota updateData={updateData} color="light" />
         </div>
       </div>
     </>
