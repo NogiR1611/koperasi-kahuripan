@@ -6,6 +6,18 @@ import {format} from 'date-fns';
 
 export default function CardTableInventaris({ color }){
     const [Items,setItems] = React.useState([]);
+    const [fromDate,setFromDate] = React.useState(null);
+    const [toDate,setToDate] = React.useState(null);
+    const EditItem = (id) => {
+        client.put(`/api/inventaris/${id}`)
+        .then( res => console.log(res))
+        .catch( err => console.log(err));
+    }
+    const DeleteItem = (id) => {
+        client.delete(`/api/inventaris/${id}`)
+        .then( res => console.log(res))
+        .catch( err => console.log(err));
+    }
 
     React.useEffect(() => {
         client.get('/api/inventaris')
@@ -34,7 +46,10 @@ export default function CardTableInventaris({ color }){
                             (color === "light" ? "text-blueGray-700" : "text-white")
                             }
                         >
-                            Laporan Daftar Inventaris Pada Periode <input className="rounded-lg" type="date" name="" id="" /> Sampai <input className="rounded-lg" type="date" name="" id="" />
+                            Laporan Daftar Inventaris Pada Periode 
+                            <input className="rounded-lg" type="date" name="" id="" value={fromDate} onChange={ (e) => setFromDate(e.target.value) } />
+                            Sampai 
+                            <input className="rounded-lg" type="date" name="" id="" value={toDate} onChange={ (e) => setToDate(e.target.value) } />
                         </h3>
                         </div>
                     </div>
@@ -103,10 +118,25 @@ export default function CardTableInventaris({ color }){
                                 >
                                 Posisi
                                 </th>
+                                <th
+                                    className={
+                                        "px-6 align-middle border border-solid font-bold py-3 text-center text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                    }
+                                >
+                                Aksi
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Items.map( (element,index) => {
+                            {Items
+                            .sort((a,b) => new Date(a.tanggal_pembelian) - new Date(b.tanggal_pembelian))
+                            .filter(
+                                element => format(new Date(element.tanggal_pembelian),"dd-MM-yyyy") >= format(new Date(fromDate),"dd-MM-yyyy")
+                                && format(new Date(element.tanggal_pembelian),"dd-MM-yyyy") <= format(new Date(toDate),"dd-MM-yyyy"))
+                            .map( (element,index) => {
                                 return (
                                     <tr>
                                         <td
@@ -168,7 +198,18 @@ export default function CardTableInventaris({ color }){
                                             }
                                         >
                                             {element.posisi}
-                                        </td>      
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            <button type="button" onClick={EditItem(element.id)} className="mx-3 font-xs">EDIT</button>
+                                            <button type="button" onClick={DeleteItem(element.id)} className="mx-3 font-xs">DELETE</button>
+                                        </td>        
                                     </tr>
                                 );
                             })}

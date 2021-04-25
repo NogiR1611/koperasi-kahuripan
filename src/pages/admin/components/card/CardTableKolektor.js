@@ -7,13 +7,13 @@ import client from '../../../../client'
 export default function CardTableKolektor({ color }){
     const [kolektor,setKolektor] = React.useState([]);
     React.useEffect(() => {
-        client.get("kolektor/lihat")
+        client.get("/api/user")
         .then( res => {
             const {data} = res.data;
             setKolektor(data);
         })
         .catch( err => console.log(err))
-    });
+    },[]);
 
     return (
         <>
@@ -81,12 +81,24 @@ export default function CardTableKolektor({ color }){
                                 >
                                 Jumlah Diterima
                                 </th>
+                                <th
+                                    className={
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                    }
+                                >
+                                Aksi
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {kolektor.map((element,index) => {
+                            {kolektor
+                            .filter( element => element.role_id === 2 )
+                            .map((element,index) => {
                                 return (
-                                    <tr key={index}>
+                                    <tr>
                                         <td
                                         className={
                                             "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
@@ -95,7 +107,7 @@ export default function CardTableKolektor({ color }){
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                         }
                                         >
-                                        {element.id}
+                                        {index + 1}
                                         </td>
                                         <td
                                             className={
@@ -105,7 +117,7 @@ export default function CardTableKolektor({ color }){
                                                 : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                             }
                                         >
-                                        {element.nama_kolektor}
+                                        {element.name}
                                         </td>
                                         <td
                                             className={
@@ -115,7 +127,6 @@ export default function CardTableKolektor({ color }){
                                                 : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                             }
                                         >
-                                        {element.anggota}
                                         </td>
                                         <td
                                             className={
@@ -125,7 +136,25 @@ export default function CardTableKolektor({ color }){
                                                 : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                             }
                                         >
-                                        {element.jumlah_diterima}
+                                        </td>
+                                        <td
+                                            className={
+                                                "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                (color === "light"
+                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                            }
+                                        >
+                                            <button
+                                                className="mx-3"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="mx-3"
+                                            >
+                                                Hapus
+                                            </button>
                                         </td>
                                     </tr>
                                 );

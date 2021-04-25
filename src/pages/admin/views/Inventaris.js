@@ -4,7 +4,6 @@ import {Modal} from "react-responsive-modal";
 import SuccessMessage from "./../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../components/Notification/ErrorMessage.js";
 import {format} from "date-fns";
-import axios from "axios"; 
 import client from "../../../client.js";
 // components
 
@@ -47,8 +46,8 @@ export default function Inventaris() {
             <div className="w-full max-w-md">
               {Notification === "berhasil" ? <SuccessMessage /> : null}
               {Notification === "gagal" ? <ErrorMessage /> : null}
-              <h3 className="text-center">Tambah Inventaris</h3>
-              <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              <h3 className="text-center font-bold text-lg">Tambah Inventaris</h3>
+              <form className="bg-white px-8 pt-6 pb-8 mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2">Nama Barang : </label>
                 <input type="text" value={namaBarang} onChange={ (e) => setNamaBarang(e.target.value) } name="" id="" />
                 <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah : </label>

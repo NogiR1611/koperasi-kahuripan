@@ -7,7 +7,7 @@ export default function CardTableTotalPinjaman({ color }){
     const [month,setMonth] = React.useState(1);
     const [Data,setData] = React.useState([]);
     React.useEffect( () => {
-        client.get('/api/pinjaman')
+        client.get('/api/angsuran?with=user;pinjaman')
         .then( res => {
             const {data} = res.data;
             setData(data);
@@ -43,7 +43,7 @@ export default function CardTableTotalPinjaman({ color }){
                             <tr>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -53,7 +53,7 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -63,7 +63,7 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -73,7 +73,7 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -83,17 +83,7 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Jumlah Pinjaman Bulan ini
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -103,7 +93,17 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        (color === "light"
+                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                    }
+                                >
+                                Jumlah Pinjaman Bulan ini
+                                </th>
+                                <th
+                                    className={
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -113,7 +113,7 @@ export default function CardTableTotalPinjaman({ color }){
                                 </th>
                                 <th
                                     className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid py-3 text-xs font-bold uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (color === "light"
                                         ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                         : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -121,21 +121,11 @@ export default function CardTableTotalPinjaman({ color }){
                                 >
                                 Provisi
                                 </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Keterangan
-                                </th>
                             </tr>
                         </thead>
                         <tbody>
                         {Data.filter( element => 
-                            format(new Date(element.amount_date),"MM") === month)
+                            format(new Date(element.paid_at),"MM") === month )
                             .map( (element,index) => {
                                 return (
                                 <tr>
@@ -157,7 +147,7 @@ export default function CardTableTotalPinjaman({ color }){
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                         }
                                     >
-                                        {element.name}
+                                        {element.user.name}
                                     </td>
                                     <td
                                         className={
@@ -167,7 +157,16 @@ export default function CardTableTotalPinjaman({ color }){
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                         }
                                     >
-                                        {element.kolektor}
+                                    </td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.pinjaman.amount}
                                     </td>
                                     <td
                                         className={
@@ -187,7 +186,7 @@ export default function CardTableTotalPinjaman({ color }){
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                         }
                                     >
-                                        {element.sukarela}
+                                        {element.pinjaman.amount - element.amount}
                                     </td>
                                     <td
                                         className={
@@ -197,9 +196,18 @@ export default function CardTableTotalPinjaman({ color }){
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                         }
                                     >
-                                        {element.provisi}
+                                        {element.volunteer}
                                     </td>
-                                    <td></td>
+                                    <td
+                                        className={
+                                            "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                            (color === "light"
+                                            ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                            : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                        }
+                                    >
+                                        {element.pinjaman.provision}
+                                    </td>
                                 </tr>
                                 )
                             })}

@@ -13,7 +13,7 @@ import client from "../../../client";
 
 export default function SimpananWajib() {
   const [namaAnggota,setNamaAnggota] = React.useState(0);
-  const [simpanan,setSimpanan] = React.useState(2);
+  const [simpanan,setSimpanan] = React.useState(0);
   const [jumlahSimpanan,setJumlahSimpanan] = React.useState(18000);
   const [Users,setUsers] = React.useState([]);
   const [Tipe,setTipe] = React.useState([]);
@@ -61,14 +61,15 @@ export default function SimpananWajib() {
         <div className="w-full mb-12 px-4">
           <Modal open={open} onClose={onCloseModal}>
             <div className="w-full max-w-md">
-              {Notification === "berhasil" ? <SuccessMessage /> : null}
-              {Notification === "gagal" ? <ErrorMessage /> : null}
-              <h3 className="text-center">Simpanan Wajib Bulan ini</h3>
-              <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+              {Notification === "berhasil" ? <SuccessMessage text="Data Berhasil Ditambahkan" /> : null}
+              {Notification === "gagal" ? <ErrorMessage text="Mohon Lengkapi Formulir Anda" /> : null}
+              <h3 className="text-center font-bold text-lg">Simpanan Wajib Bulan ini</h3>
+              <form className="bg-white px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                   <label className="block">
                     <span className="text-gray-700 text-sm font-bold mb-2">Nama Anggota : </span>
-                    <select className="form-select mt-1 block w-full rounded-lg" value={namaAnggota} onChange={ (e) => setNamaAnggota(e.target.value) } >
+                    <select className="form-select mt-1 block w-full rounded-lg" onChange={ (e) => setNamaAnggota(e.target.value) } >
+                      <option className="text-gray-500" selected>Pilih Nama Anggota</option>
                       {Users.map( (element,index) => {
                         return (
                           <option key={index} value={element.id}>{element.name}</option>
@@ -80,7 +81,8 @@ export default function SimpananWajib() {
                 <div className="mb-4">
                   <label className="block">
                     <span className="text-gray-700 text-sm font-bold mb-2">Jenis Simpanan : </span>
-                    <select className="form-select mt-1 block w-full rounded-lg" value={simpanan} onChange={ (e) => setSimpanan(e.target.value) } >
+                    <select className="form-select mt-1 block w-full rounded-lg" onChange={ (e) => setSimpanan(e.target.value) } >
+                      <option className="text-gray-500" selected>Pilih Jenis Simpanan</option>
                       {Tipe.map( (element,index) => {
                         return (
                           <option key={index} value={element.id}>{element.name}</option>
@@ -89,21 +91,26 @@ export default function SimpananWajib() {
                     </select>
                   </label>
                 </div>
-                <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah Simpanan : </label>
-                <NumberFormat
-                  thousandSeparator={true}
-                  prefix={'Rp.'}
-                  value={jumlahSimpanan}
-                  onValueChange={ (values) => {
-                    const {value} = values;
-                    setJumlahSimpanan(value)} 
-                }/>
-                <label className="block text-gray-700 text-sm font-bold mb-2">Tanggal Bayar : </label>
-                <input
-                  type="date"
-                  value={date}
-                  onChange={ (e) => setDate(e.target.value) }
-                />
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah Simpanan : </label>
+                  <NumberFormat
+                    thousandSeparator={true}
+                    prefix={'Rp.'}
+                    value={jumlahSimpanan}
+                    onValueChange={ (values) => {
+                      const {value} = values;
+                      setJumlahSimpanan(value)} 
+                  }/>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-gray-700 text-sm font-bold mb-2">Tanggal Bayar : </label>
+                  <input
+                    type="date"
+                    className="block w-full"
+                    value={date}
+                    onChange={ (e) => setDate(e.target.value) }
+                  />
+                </div>
                 <div className="flex items-center justify-between">
                   <button
                     className="w-full bg-blue-500 transition duration-450 ease-in-out hover:bg-blue-700 font-bold mt-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline"
