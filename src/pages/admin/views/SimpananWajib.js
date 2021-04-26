@@ -27,7 +27,7 @@ export default function SimpananWajib() {
       user_id : namaAnggota,
       amount : jumlahSimpanan,
       type_id : simpanan,
-      created_at : date
+      saved_at : date
     }
 
     client.post('/api/simpanan',data)

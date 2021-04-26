@@ -196,8 +196,7 @@ export default function CardTableTotalSimpanan({ color }){
                         </thead>
                         <tbody className="inline-table">
                             {Items
-                            .filter( element => 
-                                format(new Date(element.saved_at),'MM') === month && element.type_id === 3)
+                            .filter( element => format(new Date(element.saved_at),'MM') === month && element.type_id === 3 )
                             .map( (element,index) => {
                                     return (
                                         <tr key={index}>
@@ -209,7 +208,7 @@ export default function CardTableTotalSimpanan({ color }){
                                                     : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                                 }
                                             >
-                                            {index + 1}
+                                                {index + 1}
                                             </td>
                                             <td
                                                 className={
@@ -248,6 +247,7 @@ export default function CardTableTotalSimpanan({ color }){
                                                     : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                                 }
                                             >
+                                                {18000}
                                             </td>   
                                             <td
                                                 className={
@@ -267,15 +267,7 @@ export default function CardTableTotalSimpanan({ color }){
                                                     : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                                 }
                                             >
-                                            </td>
-                                            <td
-                                                className={
-                                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                    (color === "light"
-                                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                                }
-                                            >
+                                                {18000}
                                             </td>
                                             <td
                                                 className={
@@ -286,7 +278,16 @@ export default function CardTableTotalSimpanan({ color }){
                                                 }
                                             >
                                                 {element.amount}
-                                                {/*element.simpanan[index + 1].type.name === "Simpanan Manasuka" ? element.simpanan[index+1].amount : null */}
+                                            </td>
+                                            <td
+                                                className={
+                                                    "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                                    (color === "light"
+                                                    ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
+                                                    : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
+                                                }
+                                            >
+                                                {element.amount}
                                             </td>
                                         </tr>
                                     )

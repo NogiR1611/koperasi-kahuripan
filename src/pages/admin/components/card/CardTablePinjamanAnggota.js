@@ -19,6 +19,7 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
     const [year, setYear] = React.useState(new Date().getFullYear());
     const [month, setMonth] = React.useState(1);
     const [item, setItem] = React.useState(null);
+    const [itemId,setItemId] = React.useState(null);
     const [userId, setUserId] = React.useState(null);
     const [amount, setAmount] = React.useState(0);
     const [date, setDate] = React.useState(null);
@@ -93,7 +94,7 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                                 className="inline-block px-2 py-2 mx-14 rounded-lg bg-green-400 transition duration-500 ease-in-out shadow-md font-bold hover:bg-green-700"
                                 type="button"
                                 onClick={() => {
-                                    DeleteItem(item.id)
+                                    DeleteItem(itemId)
                                     setOpenDelete(false)
                                 }
                                 }>
@@ -166,7 +167,9 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                                     (color === "light" ? "text-blueGray-700" : "text-white")
                                 }
                             >
-                                Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
+                                Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => 
+                                    setYear(value)} 
+                                    yearValue={year} />
                             </h3>
                         </div>
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -362,7 +365,7 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                     </table> */}
                     <AjaxTable
                         ref={el => table.current = el}
-                        url={`/api/pinjaman?orderBy=\`id\` desc&with=user&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}`}
+                        url={`/api/pinjaman?orderBy=\`borrowed_at\` asc&with=user&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}`}
                         headers={['No', 'Nama Anggota', 'Jumlah Pinjaman', 'Tanggal Pinjaman', 'Provisi', 'Kolektor', 'Aksi']}
                         color="light"
                         columns={[
@@ -403,16 +406,16 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                                             }}
                                         >
                                             Edit
-                                            </button>
+                                        </button>
                                         <button
                                             className="mx-3"
                                             onClick={() => {
                                                 setOpenDelete(true)
-                                                setItem(element)
+                                                setItemId(element.id)
                                             }}
                                         >
                                             Hapus
-                                            </button>
+                                        </button>
                                     </>
                                 )
                             }
