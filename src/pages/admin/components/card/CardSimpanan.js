@@ -1,11 +1,5 @@
 import React from 'react';
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 import AjaxTable from '../table/AjaxTable';
-=======
-import AjaxTable from './../table/AjaxTable.js';
-import YearDropdown from './../dropdown/YearDropdown.js';
-import MonthDropdown from './../dropdown/MonthDropdown.js';
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
 import currencyFormatter from "currency-formatter";
@@ -13,30 +7,19 @@ import NumberFormat from "react-number-format";
 import client from '../../../../client.js';
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 import YearDropdown from './../dropdown/YearDropdown.js';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
-=======
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 export default function CardTableSimpananManasuka({ color, simpananType }){
-    const [Items,setItems] = React.useState([]);
+    const [item, setItem] = React.useState(null);
     const [year, setYear] = React.useState(new Date().getFullYear());
-=======
-export default function CardTableSimpananManasuka({ color,updateData }){
-    const table = React.createRef();
-    const [item,setItem] = React.useState(null);
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
     const [month,setMonth] = React.useState(1);
-    const [year,setYear] = React.useState(new Date().getFullYear());
     const [itemId,setItemId] = React.useState(null);
     const [userId,setUserId] = React.useState(null);
-    const [name,setName] = React.useState('');
     const [amount,setAmount] = React.useState(0);
     const [date,setDate] = React.useState(null);
     const [Notification,setNotification] = React.useState('');
@@ -68,43 +51,8 @@ export default function CardTableSimpananManasuka({ color,updateData }){
     }
 
     React.useEffect(() => {
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
         setMonth(1)
     }, [simpananType])
-
-    React.useEffect(() => {    
-        client.get('/api/simpanan?with=user')
-        .then( res => {
-        const {data} = res.data;
-        setItems(data);
-        })
-        .catch( err => console.log(err));
-    },[]);
-=======
-        if(updateData) {
-            table.current.reload();
-        }
-    },[updateData]);
-
-    const monthRef = React.useRef();
-    const yearRef = React.useRef();
-
-    React.useEffect(() => {
-        if (monthRef.current){
-            table.current.reload();
-        }
-
-        monthRef.current = month
-    },[month]);
-
-    React.useEffect(() => {
-        if (yearRef.current){
-            table.current.reload();
-        }
-
-        yearRef.current = month
-    },[year]);
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 
     return (
         <>
@@ -188,28 +136,16 @@ export default function CardTableSimpananManasuka({ color,updateData }){
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                                 className={
                                     "font-semibold text-lg " +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
                                 }
                             >
                                 Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
-=======
-                                className={ 
-                                "font-semibold text-lg " +
-                                (color === "light" ? "text-blueGray-700" : "text-white")
-                                }
-                            >
-                                Daftar Simpanan Manasuka Per Tahun : <YearDropdown yearChange={({ target: { value } }) => 
-                                    setYear(value)} 
-                                    yearValue={year} /> 
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                             </h3>
                         </div>
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                                 className={
                                     "font-semibold text-lg " +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
@@ -218,20 +154,11 @@ export default function CardTableSimpananManasuka({ color,updateData }){
                                 Data Pinjaman Anggota Per Bulan : <MonthDropdown monthChange={(e) => {
                                     setMonth(e.target.value);
                                 }} monthValue={month} />
-=======
-                                className={ 
-                                "font-semibold text-lg " +
-                                (color === "light" ? "text-blueGray-700" : "text-white")
-                                }
-                            >
-                                Daftar Simpanan Manasuka Per Bulan : <MonthDropdown monthChange={(e) => setMonth(e.target.value)} monthValue={month} /> 
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                             </h3>
                         </div>
                     </div>
                 </div>
                 <div className="block w-full overflow-x-auto">
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                     <AjaxTable 
                         color="light"
                         url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=sum(amount) as total_amount;\`simpanan\`.user_id;\`simpanan_last_month\`.\`total_amount\` as total_amount_last_month&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and MONTH(saved_at) = ${((month == 1) ? 12 : (month - 1))} and YEAR(saved_at) = ${((month == 1) ? (year - 1) : year)} group by user_id) simpanan_last_month.simpanan_last_month.user_id:=:simpanan.user_id`}
@@ -265,9 +192,8 @@ export default function CardTableSimpananManasuka({ color,updateData }){
                                                 className="mx-3 font-sm"
                                                 onClick={() => {
                                                     setOpenEdit(true)
-                                                    setItemId(element.id)
+                                                    setItem(element)
                                                     setUserId(element.user.id)
-                                                    setName(element.user.name)
                                                     setAmount(element.amount)
                                                     setDate(element.saved_at)
                                                 }}
@@ -289,208 +215,6 @@ export default function CardTableSimpananManasuka({ color,updateData }){
                             ]
                         }
                     />
-                    {/* <table className="items-center w-full bg-transparent border-collapse">
-=======
-                    {/*<table className="items-center w-full bg-transparent border-collapse">
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
-                        <thead>
-                            <tr>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                No
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Nama
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                S/D Bulan lalu
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Bulan ini
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Total Simpanan
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 text-center align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Items.filter( element => 
-                                format(new Date(element.saved_at),"MM") === month && element.type_id === 3)
-                            .map( (element,index) => {
-                                return (
-                                    <tr>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                        {index + 1}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                        {element.user.name}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        > 
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        > 
-                                        {element.amount}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        > 
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-sm text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
-                    </table> */}
-=======
-                    </table>*/}
-                    <AjaxTable 
-                        ref={el => table.current = el}
-                        url={`/api/simpanan?orderBy=saved_at asc&with=user&search=YEAR(saved_at)=${year};MONTH(saved_at)=${month};type_id=3`}
-                        headers={['No','Nama','Tanggal','Bulan ini','Total Simpanan','Aksi']}
-                        color="light"
-                        columns={[
-                            {
-                                render: ({ rowIndex }) => rowIndex + 1
-                            },
-                            {
-                                render: ({ element: { user : { name } } }) => name,
-                            },
-                            {
-                                render: ({ element: { saved_at } }) => format(new Date(saved_at),'dd-MM-yyyy'),
-                            },
-                            {
-                                render: ({ element: { amount } }) => amount,
-                            },
-                            {
-                                render: () => ''
-                            },
-                            {
-                                render: ({ element }) => (
-                                    <>
-                                        <button
-                                            className="mx-3"
-                                            onClick={() => {
-                                                setOpenEdit(true)
-                                                setItem(element)
-                                                setItemId(element.id)
-                                                setUserId(element.user_id)
-                                                setName(element.user.name)
-                                                setAmount(element.amount)
-                                                setDate(element.paid_at)
-                                            }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="mx-3"
-                                            onClick={() => {
-                                                setOpenDelete(true)
-                                                setItemId(element.id)
-                                            }}
-                                        >
-                                            Hapus
-                                        </button>
-                                    </>
-                                )
-                            }
-                        ]}
-                    />
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                 </div>
             </div>
         </>

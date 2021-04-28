@@ -31,11 +31,7 @@ export default function Simpanan({ match: { params: { type: simpanan_type_name }
     const data = {
       user_id : namaAnggota,
       amount : jumlahSimpanan,
-<<<<<<< HEAD:src/pages/admin/views/Simpanan.js
       type_id : simpananType.id,
-=======
-      type_id : simpanan,
->>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/views/SimpananManasuka.js
       saved_at : date
     }
 

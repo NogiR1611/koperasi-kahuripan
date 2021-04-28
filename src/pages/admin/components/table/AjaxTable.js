@@ -63,6 +63,7 @@ export default class AjaxTable extends React.Component {
 
     componentDidUpdate({ url }) {
         if (url !== this.props.url) {
+            this.state.response = null;
             this.reload();
         }
     }
@@ -130,14 +131,14 @@ export default class AjaxTable extends React.Component {
                                             this._fetchResponse(this.state.response.current_page - 1);
                                         }
                                     }} className={`outline-none block focus:outline-none rounded-full ${this.state.response.current_page > 1 ? 'text-gray-600' : 'text-gray-400'}`} style={{ padding: '7px' }}>
-                                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" ><polyline points="15 18 9 12 15 6"></polyline></svg>
+                                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" ><polyline points="15 18 9 12 15 6"></polyline></svg>
                                     </button>
                                     <button onClick={() => {
                                         if (this.state.response.current_page < this.state.response.last_page) {
                                             this._fetchResponse(this.state.response.current_page + 1);
                                         }
                                     }} className={`outline-none block focus:outline-none rounded-full ${this.state.response.current_page < this.state.response.last_page ? 'text-gray-600' : 'text-gray-400'}`} style={{ padding: '7px' }}>
-                                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" ><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" ><polyline points="9 18 15 12 9 6"></polyline></svg>
                                     </button>
                                 </div>
                             </div>
