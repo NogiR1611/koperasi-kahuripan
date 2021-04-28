@@ -17,6 +17,7 @@ export default function Angsuran() {
   const [jumlahAngsuran,setJumlahAngsuran] = React.useState(null);
   const [date,setDate] = React.useState(timestamp("YYYY-MM-DD HH:mm:ss"));
   const [kolektor,setkolektor] = React.useState(null);
+  const [updateData, setUpdateData] = React.useState(false);
   const [Notification,setNotification] = React.useState('');
   const [Items,setItems] = React.useState([]);
   const [open,setOpen] = React.useState(false);
@@ -29,18 +30,11 @@ export default function Angsuran() {
       pinjaman_id : pinjamanId,
       paid_at : date
     };
-
-    /*
-    const reduceAmount = {
-      id : pinjamanId,
-      user_id : userId,
-      amount : jumlahPinjaman-jumlahAngsuran      
-    }
-    */
    
     client.post('/api/angsuran',data)
     .then( res => {
-      setNotification("berhasil");
+      setNotification("berhasil")
+      setUpdateData(true)
     })
     .catch( err => {
       setNotification("gagal");
@@ -166,7 +160,7 @@ export default function Angsuran() {
             />
             Generate PDF
           </button>
-          <CardTableAngsuran color="light" />
+          <CardTableAngsuran updateData={updateData} color="light" />
         </div>
       </div>
     </>

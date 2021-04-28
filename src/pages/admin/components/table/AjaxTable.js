@@ -31,7 +31,7 @@ export default class AjaxTable extends React.Component {
                             <tr>
                                 {this.props.headers.map((header, index) => (
                                     <th key={index} className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
+                                        "px-6 align-middle border border-solid font-bold py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
                                         (this.props.color === "light"
                                             ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
                                             : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
@@ -69,8 +69,8 @@ export default class AjaxTable extends React.Component {
 
     componentDidMount() {
         this.setState({
-            response: null,
-        })
+            response : null,
+        });
 
         this._fetchResponse();
     }

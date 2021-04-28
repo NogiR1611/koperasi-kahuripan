@@ -1,5 +1,11 @@
 import React from 'react';
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 import AjaxTable from '../table/AjaxTable';
+=======
+import AjaxTable from './../table/AjaxTable.js';
+import YearDropdown from './../dropdown/YearDropdown.js';
+import MonthDropdown from './../dropdown/MonthDropdown.js';
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
 import currencyFormatter from "currency-formatter";
@@ -7,17 +13,27 @@ import NumberFormat from "react-number-format";
 import client from '../../../../client.js';
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 import YearDropdown from './../dropdown/YearDropdown.js';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
+=======
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
 export default function CardTableSimpananManasuka({ color, simpananType }){
     const [Items,setItems] = React.useState([]);
     const [year, setYear] = React.useState(new Date().getFullYear());
+=======
+export default function CardTableSimpananManasuka({ color,updateData }){
+    const table = React.createRef();
+    const [item,setItem] = React.useState(null);
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
     const [month,setMonth] = React.useState(1);
+    const [year,setYear] = React.useState(new Date().getFullYear());
     const [itemId,setItemId] = React.useState(null);
     const [userId,setUserId] = React.useState(null);
     const [name,setName] = React.useState('');
@@ -52,6 +68,7 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
     }
 
     React.useEffect(() => {
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
         setMonth(1)
     }, [simpananType])
 
@@ -63,6 +80,31 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
         })
         .catch( err => console.log(err));
     },[]);
+=======
+        if(updateData) {
+            table.current.reload();
+        }
+    },[updateData]);
+
+    const monthRef = React.useRef();
+    const yearRef = React.useRef();
+
+    React.useEffect(() => {
+        if (monthRef.current){
+            table.current.reload();
+        }
+
+        monthRef.current = month
+    },[month]);
+
+    React.useEffect(() => {
+        if (yearRef.current){
+            table.current.reload();
+        }
+
+        yearRef.current = month
+    },[year]);
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
 
     return (
         <>
@@ -106,11 +148,10 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                         <div className="mb-4">
                             <span className="text-gray-700 text-sm font-bold mb-2">Nama Anggota : </span>
                             <select className="form-select mt-1 block w-full rounded-lg" value={userId} onChange={ (e) => setUserId(e.target.value) } >
-                                {Items.map( (element,index) => {
-                                    return (
-                                    <option key={index} value={element.user.id}>{element.user.name}</option>
-                                    )
-                                })}
+                                <option className="text-gray-500" selected>Pilih Nama Anggota</option>
+                                {
+                                    item ? (<option value={item.user.id}>{item.user.name}</option>) : ''
+                                }
                             </select>
                         </div>
                         <div className="mb-4">
@@ -147,16 +188,28 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                                 className={
                                     "font-semibold text-lg " +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
                                 }
                             >
                                 Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
+=======
+                                className={ 
+                                "font-semibold text-lg " +
+                                (color === "light" ? "text-blueGray-700" : "text-white")
+                                }
+                            >
+                                Daftar Simpanan Manasuka Per Tahun : <YearDropdown yearChange={({ target: { value } }) => 
+                                    setYear(value)} 
+                                    yearValue={year} /> 
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                             </h3>
                         </div>
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
                             <h3
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                                 className={
                                     "font-semibold text-lg " +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
@@ -165,11 +218,20 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                                 Data Pinjaman Anggota Per Bulan : <MonthDropdown monthChange={(e) => {
                                     setMonth(e.target.value);
                                 }} monthValue={month} />
+=======
+                                className={ 
+                                "font-semibold text-lg " +
+                                (color === "light" ? "text-blueGray-700" : "text-white")
+                                }
+                            >
+                                Daftar Simpanan Manasuka Per Bulan : <MonthDropdown monthChange={(e) => setMonth(e.target.value)} monthValue={month} /> 
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                             </h3>
                         </div>
                     </div>
                 </div>
                 <div className="block w-full overflow-x-auto">
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                     <AjaxTable 
                         color="light"
                         url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=sum(amount) as total_amount;\`simpanan\`.user_id;\`simpanan_last_month\`.\`total_amount\` as total_amount_last_month&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and MONTH(saved_at) = ${((month == 1) ? 12 : (month - 1))} and YEAR(saved_at) = ${((month == 1) ? (year - 1) : year)} group by user_id) simpanan_last_month.simpanan_last_month.user_id:=:simpanan.user_id`}
@@ -228,6 +290,9 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                         }
                     />
                     {/* <table className="items-center w-full bg-transparent border-collapse">
+=======
+                    {/*<table className="items-center w-full bg-transparent border-collapse">
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                         <thead>
                             <tr>
                                 <th
@@ -369,7 +434,63 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                                 );
                             })}
                         </tbody>
+<<<<<<< HEAD:src/pages/admin/components/card/CardSimpanan.js
                     </table> */}
+=======
+                    </table>*/}
+                    <AjaxTable 
+                        ref={el => table.current = el}
+                        url={`/api/simpanan?orderBy=saved_at asc&with=user&search=YEAR(saved_at)=${year};MONTH(saved_at)=${month};type_id=3`}
+                        headers={['No','Nama','Tanggal','Bulan ini','Total Simpanan','Aksi']}
+                        color="light"
+                        columns={[
+                            {
+                                render: ({ rowIndex }) => rowIndex + 1
+                            },
+                            {
+                                render: ({ element: { user : { name } } }) => name,
+                            },
+                            {
+                                render: ({ element: { saved_at } }) => format(new Date(saved_at),'dd-MM-yyyy'),
+                            },
+                            {
+                                render: ({ element: { amount } }) => amount,
+                            },
+                            {
+                                render: () => ''
+                            },
+                            {
+                                render: ({ element }) => (
+                                    <>
+                                        <button
+                                            className="mx-3"
+                                            onClick={() => {
+                                                setOpenEdit(true)
+                                                setItem(element)
+                                                setItemId(element.id)
+                                                setUserId(element.user_id)
+                                                setName(element.user.name)
+                                                setAmount(element.amount)
+                                                setDate(element.paid_at)
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="mx-3"
+                                            onClick={() => {
+                                                setOpenDelete(true)
+                                                setItemId(element.id)
+                                            }}
+                                        >
+                                            Hapus
+                                        </button>
+                                    </>
+                                )
+                            }
+                        ]}
+                    />
+>>>>>>> dceedfdd6301aab2f1903ea74f92225f95365e45:src/pages/admin/components/card/CardTableSimpananManasuka.js
                 </div>
             </div>
         </>
