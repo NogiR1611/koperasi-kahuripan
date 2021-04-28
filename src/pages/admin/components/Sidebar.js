@@ -1,11 +1,17 @@
 import React from "react";
+import client from "../../../client";
 import { Link } from "react-router-dom";
 
 import NotificationDropdown from "./dropdown/NotificationDropdown.js";
 import UserDropdown from "./dropdown/UserDropdown.js";
 
 export default function Sidebar() {
+  const [simpananTypes, setSimpananTypes] = React.useState([]);
   const [collapseShow, setCollapseShow] = React.useState("hidden");
+
+  React.useEffect(() => {
+    client.get('api/simpanan_tipe?select=name;display_name;id').then(({ data }) => setSimpananTypes(data)).catch(e => console.log(e))
+  }, []);
 
   return (
     <>
@@ -159,48 +165,31 @@ export default function Sidebar() {
                 Simpanan
               </h6>
               <hr className="my-2 md:min-w-full" />
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/simpanan-wajib") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/simpanan-wajib"
-                >
-                  <i
-                    className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/simpanan-wajib") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Simpanan Wajib
-                </Link>
-              </li>
-              <li className="items-center">
-                <Link
-                  className={
-                    "text-xs uppercase py-3 font-bold block " +
-                    (window.location.href.indexOf("/admin/simpanan-manasuka") !== -1
-                      ? "text-lightBlue-500 hover:text-lightBlue-600"
-                      : "text-blueGray-700 hover:text-blueGray-500")
-                  }
-                  to="/admin/simpanan-manasuka"
-                >
-                  <i
-                    className={
-                      "fas fa-table mr-2 text-sm " +
-                      (window.location.href.indexOf("/admin/simpanan-manasuka") !== -1
-                        ? "opacity-75"
-                        : "text-blueGray-300")
-                    }
-                  ></i>{" "}
-                  Simpanan Manasuka
-                </Link>
-              </li>
+              {[...simpananTypes].map(simpananType => {
+                return (
+                  <li key={simpananType.id} className="items-center">
+                    <Link
+                      className={
+                        "text-xs uppercase py-3 font-bold block " +
+                        (window.location.href.indexOf(`/admin/simpanan/${simpananType.name}`) !== -1
+                          ? "text-lightBlue-500 hover:text-lightBlue-600"
+                          : "text-blueGray-700 hover:text-blueGray-500")
+                      }
+                      to={`/admin/simpanan/${simpananType.name}`}
+                    >
+                      <i
+                        className={
+                          "fas fa-table mr-2 text-sm " +
+                          (window.location.href.indexOf(`/admin/simpanan/${simpananType.name}`) !== -1
+                            ? "opacity-75"
+                            : "text-blueGray-300")
+                        }
+                      ></i>{" "}
+                      { simpananType.display_name }
+                    </Link>
+                  </li>
+                )
+              })}
               <li className="items-center">
                 <Link
                   className={

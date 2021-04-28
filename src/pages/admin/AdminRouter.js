@@ -3,12 +3,11 @@ import {Route,Switch,Redirect} from 'react-router-dom';
 import PrivateRoute from '../../privateRoute.js';
 
 //views
+import Simpanan from './views/Simpanan';
 import DashboardAdmin from './views/dashboardAdmin.js';
 import Profil from './views/Profil.js';
 import Pemasukan from './views/Pemasukan.js';
 import Pengeluaran from './views/Pengeluaran.js';
-import SimpananWajib from './views/SimpananWajib.js';
-import SimpananManasuka from './views/SimpananManasuka.js';
 import TotalSimpanan from './views/TotalSimpanan.js';
 import Angsuran from './views/Angsuran.js';
 import PinjamanAnggota from './views/PinjamanAnggota';
@@ -46,8 +45,7 @@ function Admin(){
                     <PrivateRoute path='/admin/profile' restricted={true} component={Profil} />
                     <PrivateRoute path='/admin/pemasukan' restricted={true} component={Pemasukan} />
                     <PrivateRoute path='/admin/pengeluaran' restricted={true} component={Pengeluaran} />
-                    <PrivateRoute path='/admin/simpanan-wajib' restricted={true} component={SimpananWajib} />
-                    <PrivateRoute path='/admin/simpanan-manasuka' restricted={true} component={SimpananManasuka} />
+                    <PrivateRoute path='/admin/simpanan/:type' restricted={true} component={Simpanan} />
                     <PrivateRoute path='/admin/total-simpanan' restricted={true} component={TotalSimpanan} />
                     <PrivateRoute path='/admin/angsuran' restricted={true} component={Angsuran} />
                     <PrivateRoute path='/admin/pinjaman-anggota' restricted={true} component={PinjamanAnggota} />

@@ -61,6 +61,12 @@ export default class AjaxTable extends React.Component {
         return `${url.pathname}?${url.searchParams}`;
     }
 
+    componentDidUpdate({ url }) {
+        if (url !== this.props.url) {
+            this.reload();
+        }
+    }
+
     componentDidMount() {
         this.setState({
             response: null,
@@ -120,7 +126,7 @@ export default class AjaxTable extends React.Component {
                             <div style={{ float: 'right', marginBottom: '.8rem' }}>
                                 <div className="flex flex-nowrap gap-3">
                                     <button onClick={() => {
-                                        if (this.state.response.current_page) {
+                                        if (this.state.response.current_page > 1) {
                                             this._fetchResponse(this.state.response.current_page - 1);
                                         }
                                     }} className={`outline-none block focus:outline-none rounded-full ${this.state.response.current_page > 1 ? 'text-gray-600' : 'text-gray-400'}`} style={{ padding: '7px' }}>

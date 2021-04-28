@@ -1,24 +1,29 @@
 import React from "react";
+import 'rc-datetime-picker/dist/picker.min.css'
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
 import {format} from "date-fns";
+import moment from "moment";
+import { DatetimePickerTrigger } from 'rc-datetime-picker';
 import NumberFormat from "react-number-format";
 import SuccessMessage from "./../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../components/Notification/ErrorMessage.js";
  
 // components
 
-import CardTableSimpananWajib from "../components/card/CardTableSimpananWajib.js";
+import CardSimpanan from "../components/card/CardSimpanan.js";
 import client from "../../../client";
 
-export default function SimpananWajib() {
+export default function Simpanan({ match: { params: { type: simpanan_type_name } } }) {
+  const mmnt = moment();
+  const [ simpananType, setSimpananType ] = React.useState(null);
+  const [ hasFetchSimpananType, setHasFetchSimpananType ] = React.useState(false);
+
   const [namaAnggota,setNamaAnggota] = React.useState(0);
-  const [simpanan,setSimpanan] = React.useState(0);
-  const [jumlahSimpanan,setJumlahSimpanan] = React.useState(18000);
+  const [jumlahSimpanan,setJumlahSimpanan] = React.useState(0);
   const [Users,setUsers] = React.useState([]);
-  const [Tipe,setTipe] = React.useState([]);
   const [Notification,setNotification] = React.useState("");
-  const [date,setDate] = React.useState(format(new Date(),"yyyy-MM-dd"));
+  const [date,setDate] = React.useState(mmnt.format('YYYY-MM-DD HH:MM:SS'));
   const [open,setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
   const onCloseModal = () => setOpen(false);
@@ -26,8 +31,8 @@ export default function SimpananWajib() {
     const data = {
       user_id : namaAnggota,
       amount : jumlahSimpanan,
-      type_id : simpanan,
-      created_at : date
+      type_id : simpananType.id,
+      saved_at : date
     }
 
     client.post('/api/simpanan',data)
@@ -40,6 +45,11 @@ export default function SimpananWajib() {
   }
 
   React.useEffect(() => {
+    client.get(`/api/simpanan_tipe?search=name = '${simpanan_type_name}'&limit=1`).then(({ data }) => {
+        if (data.length) {
+            setSimpananType(data[0]);
+        }
+    }).catch(e => console.log(e)).finally(() => setHasFetchSimpananType(true))
     client.get('/api/user')
     .then( res => {
       const {data} = res.data;
@@ -47,23 +57,17 @@ export default function SimpananWajib() {
     })
     .catch( err => console.log(err));
 
-    client.get('/api/simpanan_tipe')
-    .then( res => {
-      setTipe(res.data);
-    })
-    .catch(err => console.log(err));
+  }, [simpanan_type_name]);
 
-  },[]);
-  
-  return (
+  return simpananType ? (
     <>
       <div className="flex flex-wrap mt-4">
         <div className="w-full mb-12 px-4">
-          <Modal open={open} onClose={onCloseModal}>
+        <Modal open={open} onClose={onCloseModal}>
             <div className="w-full max-w-md">
               {Notification === "berhasil" ? <SuccessMessage text="Data Berhasil Ditambahkan" /> : null}
               {Notification === "gagal" ? <ErrorMessage text="Mohon Lengkapi Formulir Anda" /> : null}
-              <h3 className="text-center font-bold text-lg">Simpanan Wajib Bulan ini</h3>
+              <h3 className="text-center font-bold text-lg">{simpananType.display_name} Bulan ini</h3>
               <form className="bg-white px-8 pt-6 pb-8 mb-4">
                 <div className="mb-4">
                   <label className="block">
@@ -79,20 +83,7 @@ export default function SimpananWajib() {
                   </label>
                 </div>
                 <div className="mb-4">
-                  <label className="block">
-                    <span className="text-gray-700 text-sm font-bold mb-2">Jenis Simpanan : </span>
-                    <select className="form-select mt-1 block w-full rounded-lg" onChange={ (e) => setSimpanan(e.target.value) } >
-                      <option className="text-gray-500" selected>Pilih Jenis Simpanan</option>
-                      {Tipe.map( (element,index) => {
-                        return (
-                          <option key={index} value={element.id}>{element.name}</option>
-                        )
-                      })}
-                    </select>
-                  </label>
-                </div>
-                <div className="mb-4">
-                  <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah Simpanan : </label>
+                <label className="block text-gray-700 text-sm font-bold mb-2">Jumlah Simpanan : </label>
                   <NumberFormat
                     thousandSeparator={true}
                     prefix={'Rp.'}
@@ -104,12 +95,13 @@ export default function SimpananWajib() {
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 text-sm font-bold mb-2">Tanggal Bayar : </label>
-                  <input
-                    type="date"
-                    className="block w-full"
+                  <DatetimePickerTrigger
+                    moment={mmnt}
                     value={date}
-                    onChange={ (e) => setDate(e.target.value) }
-                  />
+                    onChange={ moment => setDate(moment.format('YYYY-MM-DD HH:MM:SS')) }
+                  >
+                      <input type="text" className="w-full" value={date} readOnly />  
+                  </DatetimePickerTrigger>
                 </div>
                 <div className="flex items-center justify-between">
                   <button
@@ -135,7 +127,7 @@ export default function SimpananWajib() {
             Tambah
           </button>
           <button
-              className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 rounded inline-flex items-center"
+              className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 mb-2 rounded inline-flex items-center"
               type="button"
             >
             <img 
@@ -145,9 +137,13 @@ export default function SimpananWajib() {
             />
             Generate PDF
           </button>
-          <CardTableSimpananWajib color="light" />
+          <CardSimpanan simpananType={simpananType} color="light"/>
         </div>
       </div>
     </>
-  );
+  ) : (hasFetchSimpananType ? ((
+    <>
+        <h3>Not Found</h3>
+    </>
+  )) : '');
 }

@@ -56,25 +56,6 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
         }
     }, [updateData])
 
-    const monthRef = React.useRef();
-    const yearRef = React.useRef();
-
-    React.useEffect(() => {
-        if (monthRef.current) {
-            table.current.reload();
-        }
-
-        monthRef.current = month;
-    }, [month])
-
-    React.useEffect(() => {
-        if (yearRef.current) {
-            table.current.reload();
-        }
-
-        yearRef.current = month;
-    }, [year])
-
     return (
         <>
             <div

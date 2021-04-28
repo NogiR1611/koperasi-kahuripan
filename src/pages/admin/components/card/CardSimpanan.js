@@ -1,18 +1,22 @@
 import React from 'react';
+import AjaxTable from '../table/AjaxTable';
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
-import {format} from "date-fns";
+import currencyFormatter from "currency-formatter";
 import NumberFormat from "react-number-format";
 import client from '../../../../client.js';
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
+import YearDropdown from './../dropdown/YearDropdown.js';
 import MonthDropdown from './../dropdown/MonthDropdown.js';
+
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
-export default function CardTableSimpananManasuka({ color }){
+export default function CardTableSimpananManasuka({ color, simpananType }){
     const [Items,setItems] = React.useState([]);
+    const [year, setYear] = React.useState(new Date().getFullYear());
     const [month,setMonth] = React.useState(1);
     const [itemId,setItemId] = React.useState(null);
     const [userId,setUserId] = React.useState(null);
@@ -30,7 +34,7 @@ export default function CardTableSimpananManasuka({ color }){
             user_id : userId,
             amount : amount,
             type_id : 3,
-            created_at : date
+            saved_at : date
         };
 
         client.put(`/api/simpanan/${itemId}`,data)
@@ -46,6 +50,10 @@ export default function CardTableSimpananManasuka({ color }){
         .then( res => setNotification("berhasil"))
         .catch( err => setNotification("gagal"));
     }
+
+    React.useEffect(() => {
+        setMonth(1)
+    }, [simpananType])
 
     React.useEffect(() => {    
         client.get('/api/simpanan?with=user')
@@ -94,7 +102,7 @@ export default function CardTableSimpananManasuka({ color }){
                 {Notification === "gagal edit" ? <ErrorMessage text="Maaf Data gagal di edit" /> : null }
                 <Modal open={openEdit} onClose={onCloseEdit}>
                     <form className="bg-white px-8 pt-6 pb-8 mb-4">
-                        <h3 className="text-center font-bold text-lg mb-2">Edit Data Simpanan Manasuka</h3>
+                        <h3 className="text-center font-bold text-lg mb-2">Edit Data {simpananType.display_name}</h3>
                         <div className="mb-4">
                             <span className="text-gray-700 text-sm font-bold mb-2">Nama Anggota : </span>
                             <select className="form-select mt-1 block w-full rounded-lg" value={userId} onChange={ (e) => setUserId(e.target.value) } >
@@ -138,19 +146,88 @@ export default function CardTableSimpananManasuka({ color }){
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                        <h3
-                            className={ 
-                            "font-semibold text-lg " +
-                            (color === "light" ? "text-blueGray-700" : "text-white")
-                            }
-                        >
-                        Daftar Simpanan Manasuka Per Bulan : <MonthDropdown monthChange={(e) => setMonth(e.target.value)} monthValue={month} /> 
-                        </h3>
+                            <h3
+                                className={
+                                    "font-semibold text-lg " +
+                                    (color === "light" ? "text-blueGray-700" : "text-white")
+                                }
+                            >
+                                Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
+                            </h3>
+                        </div>
+                        <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                            <h3
+                                className={
+                                    "font-semibold text-lg " +
+                                    (color === "light" ? "text-blueGray-700" : "text-white")
+                                }
+                            >
+                                Data Pinjaman Anggota Per Bulan : <MonthDropdown monthChange={(e) => {
+                                    setMonth(e.target.value);
+                                }} monthValue={month} />
+                            </h3>
                         </div>
                     </div>
                 </div>
                 <div className="block w-full overflow-x-auto">
-                    <table className="items-center w-full bg-transparent border-collapse">
+                    <AjaxTable 
+                        color="light"
+                        url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=sum(amount) as total_amount;\`simpanan\`.user_id;\`simpanan_last_month\`.\`total_amount\` as total_amount_last_month&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and MONTH(saved_at) = ${((month == 1) ? 12 : (month - 1))} and YEAR(saved_at) = ${((month == 1) ? (year - 1) : year)} group by user_id) simpanan_last_month.simpanan_last_month.user_id:=:simpanan.user_id`}
+                        headers={
+                            [
+                                'No',
+                                `Nama Anggota ${simpananType.name}`,
+                                'Bulan Ini',
+                                'S/D Bulan Lalu',
+                                'Aksi'
+                            ]
+                        }
+                        columns={
+                            [
+                                {
+                                    render: ({ rowIndex }) => rowIndex + 1
+                                },
+                                {
+                                    render: ({ element }) => element.user.name
+                                },
+                                {
+                                    render: ({ element: { total_amount } }) => currencyFormatter.format(total_amount, { code: 'IDR' }),
+                                },
+                                {
+                                    render: ({ element: { total_amount_last_month } }) => currencyFormatter.format(total_amount_last_month, { code: 'IDR' }),
+                                },
+                                {
+                                    render: ({ element }) => (
+                                        <>
+                                            <button
+                                                className="mx-3 font-sm"
+                                                onClick={() => {
+                                                    setOpenEdit(true)
+                                                    setItemId(element.id)
+                                                    setUserId(element.user.id)
+                                                    setName(element.user.name)
+                                                    setAmount(element.amount)
+                                                    setDate(element.saved_at)
+                                                }}
+                                            >
+                                                Edit
+                                            </button>
+                                            <button
+                                                className="mx-3 font-sm"
+                                                onClick={() => {
+                                                    setOpenDelete(true)
+                                                    setItemId(element.id)
+                                                }}
+                                            >
+                                                Hapus
+                                            </button> 
+                                        </>
+                                    )
+                                }
+                            ]
+                        }
+                    />
+                    {/* <table className="items-center w-full bg-transparent border-collapse">
                         <thead>
                             <tr>
                                 <th
@@ -162,16 +239,6 @@ export default function CardTableSimpananManasuka({ color }){
                                     }
                                 >
                                 No
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                No.Anggota
                                 </th>
                                 <th
                                     className={
@@ -296,34 +363,13 @@ export default function CardTableSimpananManasuka({ color }){
                                                 : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
                                             }
                                         >
-                                            <button
-                                                className="mx-3 font-sm"
-                                                onClick={() => {
-                                                    setOpenEdit(true)
-                                                    setItemId(element.id)
-                                                    setUserId(element.user.id)
-                                                    setName(element.user.name)
-                                                    setAmount(element.amount)
-                                                    setDate(element.saved_at)
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="mx-3 font-sm"
-                                                onClick={() => {
-                                                    setOpenDelete(true)
-                                                    setItemId(element.id)
-                                                }}
-                                            >
-                                                Hapus
-                                            </button> 
+                                            
                                         </td>
                                     </tr>
                                 );
                             })}
                         </tbody>
-                    </table>
+                    </table> */}
                 </div>
             </div>
         </>
