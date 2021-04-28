@@ -14,8 +14,9 @@ import MonthDropdown from './../dropdown/MonthDropdown.js';
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
-export default function CardTableSimpananManasuka({ color, simpananType }){
+export default function CardTableSimpananManasuka({ color, simpananType, shouldUpdates }){
     const [item, setItem] = React.useState(null);
+    const table = React.createRef();
     const [year, setYear] = React.useState(new Date().getFullYear());
     const [month,setMonth] = React.useState(1);
     const [itemId,setItemId] = React.useState(null);
@@ -53,6 +54,12 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
     React.useEffect(() => {
         setMonth(1)
     }, [simpananType])
+
+    React.useEffect(() => {
+        if (shouldUpdates[0]) {
+            table.current.reload().then(() => shouldUpdates[1](false));
+        }
+    }, [shouldUpdates[0]])
 
     return (
         <>
@@ -134,41 +141,43 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                 </Modal>
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
-                        <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <div className="relative flex flex-nowrap gap-3 items-center w-1/2">
                             <h3
                                 className={
-                                    "font-semibold text-lg " +
+                                    "font-semibold text-lg block whitespace-nowrap" +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
                                 }
                             >
-                                Data Pinjaman Anggota Per Tahun : <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
+                                Data {simpananType.display_name} Anggota Per Tahun 
                             </h3>
+                            <YearDropdown yearChange={({ target: { value } }) => setYear(value)} yearValue={year} />
                         </div>
-                        <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                        <div className="relative items-center gap-3 flex flex-nowrap w-1/2 px-4">
                             <h3
                                 className={
-                                    "font-semibold text-lg " +
+                                    "font-semibold text-lg block whitespace-nowrap" +
                                     (color === "light" ? "text-blueGray-700" : "text-white")
                                 }
                             >
-                                Data Pinjaman Anggota Per Bulan : <MonthDropdown monthChange={(e) => {
+                                Data {simpananType.display_name} Per Bulan
+                            </h3>
+                            <MonthDropdown monthChange={(e) => {
                                     setMonth(e.target.value);
                                 }} monthValue={month} />
-                            </h3>
                         </div>
                     </div>
                 </div>
-                <div className="block w-full overflow-x-auto">
-                    <AjaxTable 
+                <div className="block w-full overflow-x-auto mt-6">
+                    <AjaxTable
+                        ref={component => table.current = component}
                         color="light"
                         url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=sum(amount) as total_amount;\`simpanan\`.user_id;\`simpanan_last_month\`.\`total_amount\` as total_amount_last_month&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and MONTH(saved_at) = ${((month == 1) ? 12 : (month - 1))} and YEAR(saved_at) = ${((month == 1) ? (year - 1) : year)} group by user_id) simpanan_last_month.simpanan_last_month.user_id:=:simpanan.user_id`}
                         headers={
                             [
                                 'No',
-                                `Nama Anggota ${simpananType.name}`,
+                                `Nama Anggota`,
                                 'Bulan Ini',
                                 'S/D Bulan Lalu',
-                                'Aksi'
                             ]
                         }
                         columns={
@@ -185,33 +194,6 @@ export default function CardTableSimpananManasuka({ color, simpananType }){
                                 {
                                     render: ({ element: { total_amount_last_month } }) => currencyFormatter.format(total_amount_last_month, { code: 'IDR' }),
                                 },
-                                {
-                                    render: ({ element }) => (
-                                        <>
-                                            <button
-                                                className="mx-3 font-sm"
-                                                onClick={() => {
-                                                    setOpenEdit(true)
-                                                    setItem(element)
-                                                    setUserId(element.user.id)
-                                                    setAmount(element.amount)
-                                                    setDate(element.saved_at)
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="mx-3 font-sm"
-                                                onClick={() => {
-                                                    setOpenDelete(true)
-                                                    setItemId(element.id)
-                                                }}
-                                            >
-                                                Hapus
-                                            </button> 
-                                        </>
-                                    )
-                                }
                             ]
                         }
                     />

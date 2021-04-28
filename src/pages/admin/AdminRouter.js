@@ -9,7 +9,6 @@ import Profil from './views/Profil.js';
 import Pemasukan from './views/Pemasukan.js';
 import Pengeluaran from './views/Pengeluaran.js';
 import TotalSimpanan from './views/TotalSimpanan.js';
-import Angsuran from './views/Angsuran.js';
 import PinjamanAnggota from './views/PinjamanAnggota';
 import Setoran from './views/Setoran.js';
 import TotalPinjaman from './views/TotalPinjaman.js';
@@ -47,7 +46,6 @@ function Admin(){
                     <PrivateRoute path='/admin/pengeluaran' restricted={true} component={Pengeluaran} />
                     <PrivateRoute path='/admin/simpanan/:type' restricted={true} component={Simpanan} />
                     <PrivateRoute path='/admin/total-simpanan' restricted={true} component={TotalSimpanan} />
-                    <PrivateRoute path='/admin/angsuran' restricted={true} component={Angsuran} />
                     <PrivateRoute path='/admin/pinjaman-anggota' restricted={true} component={PinjamanAnggota} />
                     <PrivateRoute path='/admin/setoran' restricted={true} component={Setoran} />
                     <PrivateRoute path='/admin/total-pinjaman' restricted={true} component={TotalPinjaman} />

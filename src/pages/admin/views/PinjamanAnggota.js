@@ -1,4 +1,6 @@
 import React from "react";
+import moment from "moment";
+import { DatetimePickerTrigger } from "rc-datetime-picker";
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
 import timestamp from "time-stamp";
@@ -11,6 +13,7 @@ import client from "../../../client";
 import CardTablePinjamanAnggota from "../components/card/CardTablePinjamanAnggota.js";
 
 export default function PinjamanAnggota() {
+  const mmnt = moment()
   const [installments, setInstallments] = React.useState(null);
   const [open,setOpen] = React.useState(false);
   const [Users,setUsers] = React.useState([]);
@@ -101,12 +104,17 @@ export default function PinjamanAnggota() {
                 </div>
                 <div className="mb-4">
                   <label className="block text-gray-700 font-bold mb-2">Tanggal Pinjam : </label>
-                  <input
-                    className="w-full"
-                    type="date"
-                    value={date}
-                    onChange={ (e) => setDate(e.target.value) }
+                  <DatetimePickerTrigger
+                    moment={mmnt}
+                    onChange={moment => setDate(moment.format('YYYY-MM-DD HH:mm:ss'))}
+                  >
+                    <input
+                      className="w-full"
+                      type="text"
+                      value={date}
+                      readOnly
                   />
+                  </DatetimePickerTrigger>
                 </div>
                 <div className="flex items-center justify-between">
                   <button
@@ -140,7 +148,7 @@ export default function PinjamanAnggota() {
             />
             Generate PDF
           </button>
-          <CardTablePinjamanAnggota updateData={updateData} color="light" />
+          <CardTablePinjamanAnggota updateData={[updateData, setUpdateData]} color="light" />
         </div>
       </div>
     </>

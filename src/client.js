@@ -2,8 +2,9 @@ import axios from 'axios';
 
 const client = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
-    header : {
+    headers : {
         "Content-type" : "application/json",
+        "Authorization": `Bearer ${localStorage.getItem('TOKEN_KEY')}`
     }
 });
 

@@ -52,10 +52,10 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
     }
 
     React.useEffect(() => {
-        if (updateData) {
-            table.current.reload();
+        if (updateData[0]) {
+            table.current.reload().then(() => updateData[1](false));
         }
-    }, [updateData])
+    }, [updateData[0]])
 
     return (
         <>
@@ -168,186 +168,10 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                     </div>
                 </div>
                 <div className="block w-full overflow-x-auto mt-6">
-                    {/* <table className="items-center w-full bg-transparent border-collapse">
-                        <thead>
-                            <tr>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                No
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Nama Anggota
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Jumlah Pinjaman
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Tanggal Pinjaman
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Provisi
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Kolektor
-                                </th>
-                                <th
-                                    className={
-                                        "px-6 align-middle border border-solid font-bold py-3 text-xs text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                        (color === "light"
-                                        ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                        : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                    }
-                                >
-                                Aksi
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Items
-                            .map( (element,index) => {
-                                return (
-                                    <tr key={element.id}>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            {index + 1}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            {element.user.name}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            {currencyFormatter.format(element.amount, { code : 'IDR' })}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            {format(new Date(element.borrowed_at),'dd-MM-yyyy')}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            {currencyFormatter.format(element.provision,{ code : 'IDR' })}
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                        </td>
-                                        <td
-                                            className={
-                                                "px-6 align-middle border border-solid py-3 text-sm text-center uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left " +
-                                                (color === "light"
-                                                ? "bg-blueGray-50 text-blueGray-500 border-blueGray-100"
-                                                : "bg-lightBlue-800 text-lightBlue-300 border-lightBlue-700")
-                                            }
-                                        >
-                                            <button
-                                                className="mx-3"
-                                                onClick={() => {
-                                                    setOpenEdit(true)
-                                                    setItemId(element.id)
-                                                    setUserId(element.id)
-                                                    setName(element.name)
-                                                    setAmount(element.amount)
-                                                    setProvision(element.provision)
-                                                    setDate(element.borrowed_at)
-                                                }}
-                                            >
-                                                Edit
-                                            </button>
-                                            <button
-                                                className="mx-3"
-                                                onClick={() => {
-                                                    setOpenDelete(true)
-                                                    setItemId(element.id)
-                                                }}
-                                            >
-                                                Hapus
-                                            </button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table> */}
                     <AjaxTable
                         ref={el => table.current = el}
-                        url={`/api/pinjaman?orderBy=\`borrowed_at\` asc&with=user&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}`}
-                        headers={['No', 'Nama Anggota', 'Jumlah Pinjaman', 'Tanggal Pinjaman', 'Provisi', 'Kolektor', 'Aksi']}
+                        url={`/api/pinjaman?orderBy=\`borrowed_at\` asc&with=user;angsuran&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}`}
+                        headers={['No', 'Nama Anggota', 'Jumlah Pinjaman', 'Tanggal Pinjaman', 'Provisi', 'Kolektor', 'Angsuran', 'Keterangan']}
                         color="light"
                         columns={[
                             {
@@ -375,30 +199,15 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                             },
 
                             {
-                                render: ({ element }) => (
-                                    <>
-                                        <button
-                                            className="mx-3"
-                                            onClick={() => {
-                                                setOpenEdit(true)
-                                                setItem(element)
-                                                setAmount(element.amount)
-                                                setDate(element.borrowed_at)
-                                            }}
-                                        >
-                                            Edit
-                                        </button>
-                                        <button
-                                            className="mx-3"
-                                            onClick={() => {
-                                                setOpenDelete(true)
-                                                setItemId(element.id)
-                                            }}
-                                        >
-                                            Hapus
-                                        </button>
-                                    </>
-                                )
+                                render: ({ element: { angsuran } }) => {
+                                    return angsuran.length
+                                }
+                            },
+
+                            {
+                                render: ({ element: { angsuran } }) => {
+                                    return angsuran.filter(({ paided_at }) => paided_at != null).length
+                                }
                             }
                         ]}
                     />
