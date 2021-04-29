@@ -184,7 +184,7 @@ export default function CardTableSimpananManasuka({ color, simpananType, shouldU
                             [
                                 {
                                     render: ({ rowIndex }) => rowIndex + 1
-                                },
+                                }, 
                                 {
                                     render: ({ element }) => element.user.name
                                 },

@@ -11,23 +11,24 @@ import NumberFormat from "react-number-format";
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
 
+import './../../../../assets/style/style.css';
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';
 
 export default function CardTablePinjamanAnggota({ color, updateData }) {
     const table = React.createRef();
     const [year, setYear] = React.useState(new Date().getFullYear());
+    const [angsuranYear,setAngsuranYear] = React.useState(new Date().getFullYear());
     const [month, setMonth] = React.useState(1);
-    const [item, setItem] = React.useState(null);
-    const [itemId,setItemId] = React.useState(null);
-    const [userId, setUserId] = React.useState(null);
+    const [angsuranMonth,setAngsuranMonth] = React.useState(1);
+    const [pinjamanId,setPinjamanId] = React.useState(0);
     const [amount, setAmount] = React.useState(0);
-    const [date, setDate] = React.useState(null);
-    const [Notification, setNotification] = React.useState(null);
-    const [openEdit, setOpenEdit] = React.useState(false);
-    const [openDelete, setOpenDelete] = React.useState(false);
-    const onCloseDelete = () => setOpenDelete(false);
-    const onCloseEdit = () => setOpenEdit(false);
+    const [volunteer,setVolunteer] = React.useState(0);
+    const [payingAt, setPayingAt] = React.useState(null);
+    const [openAngsuran,setOpenAngsuran] = React.useState(false);
+    const onCloseAngsuran = () => setOpenAngsuran(false);
+    
+    /*
     const EditItem = (itemId) => {
         const data = {
             user_id: userId,
@@ -50,6 +51,7 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
             .then(res => setNotification("berhasil"))
             .catch(err => setNotification("gagal"));
     }
+    */
 
     React.useEffect(() => {
         if (updateData[0]) {
@@ -65,7 +67,59 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                     (color === "light" ? "bg-white" : "bg-lightBlue-900 text-white")
                 }
             >
-                {Notification === "berhasil" ? <SuccessMessage text="Data Berhasil Dihapus" /> : null}
+                <Modal classNames="Modal" open={openAngsuran} onClose={onCloseAngsuran}>
+                    <div className="max-w-screen-lg">
+                        <div className="rounded-t mb-0 px-4 py-3 border-0">
+                            <div className="flex flex-wrap items-center">
+                                <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                    <h3
+                                        className={
+                                        "font-semibold text-lg " +
+                                        (color === "light" ? "text-blueGray-700" : "text-white")
+                                        }
+                                    >
+                                        Data Angsuran Anggota Per Tahun : <br/> <YearDropdown yearChange={({ target: { value } }) => 
+                                            setAngsuranYear(value)} 
+                                            yearValue={angsuranYear} />
+                                    </h3>
+                                </div>
+                                <div className="relative w-full px-4 max-w-full flex-grow flex-1">
+                                    <h3
+                                        className={
+                                        "font-semibold text-lg " +
+                                        (color === "light" ? "text-blueGray-700" : "text-white")
+                                        }
+                                    >
+                                        Data Angsuran Anggota Per {pinjamanId} Bulan : <br/> <MonthDropdown monthChange={(e) => setAngsuranMonth(e.target.value)} monthValue={angsuranMonth} />
+                                    </h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="block w-full overflow-x-auto">
+                            <AjaxTable
+                                ref={el => table.current = el}
+                                url={`/api/pinjaman?orderBy=borrowed_at%20asc&with=user;angsuran&search=id=${pinjamanId}`}
+                                headers={['No','Jumlah Angsuran','Sisa Pinjaman','Tanggal Jatuh Tempo']}
+                                color="light"
+                                columns={[
+                                    {
+                                        render: ({ rowIndex }) => rowIndex + 1
+                                    },
+                                    {
+                                        render: ({ element: { angsuran: { amount } } }) => currencyFormatter.format(amount,{ code: 'IDR' }),
+                                    },
+                                    {
+                                        render: () => '',
+                                    },
+                                    {
+                                        render: ({ element: { angsuran: { paying_at } } }) => format(new Date(paying_at),'dd-MM-yyyy')
+                                    }
+                                ]}
+                            />
+                        </div>
+                    </div>
+                </Modal>
+                {/*Notification === "berhasil" ? <SuccessMessage text="Data Berhasil Dihapus" /> : null}
                 {Notification === "gagal" ? <ErrorMessage text="Maaf Data Gagal Dihapus" /> : null}
                 <Modal open={openDelete} onClose={onCloseDelete}>
                     <form className="bg-white px-8 pt-6 pb-8 mb-4">
@@ -91,9 +145,9 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                         </div>
                     </form>
                 </Modal>
-                {Notification === "berhasil edit" ? <SuccessMessage text="Data berhasil di Edit" /> : null}
-                {Notification === "gagal edit" ? <ErrorMessage text="Mohon Lengkapi Formulir Anda" /> : null}
-                {item ? (<Modal open={openEdit} onClose={onCloseEdit}>
+                {/*Notification === "berhasil edit" ? <SuccessMessage text="Data berhasil di Edit" /> : null}
+                {/*Notification === "gagal edit" ? <ErrorMessage text="Mohon Lengkapi Formulir Anda" /> : null}
+                {/*item ? (<Modal open={openEdit} onClose={onCloseEdit}>
                     <form className="bg-white px-8 pt-6 pb-8 mb-4">
                         <h3 className="text-center font-bold text-lg mb-2">Edit Data Pinjaman Anggota</h3>
                         <div className="mb-4">
@@ -138,7 +192,7 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                             </button>
                         </div>
                     </form>
-                </Modal>) : ''}
+                    </Modal>) : ''*/}
                 <div className="rounded-t mb-0 px-4 py-3 border-0">
                     <div className="flex flex-wrap items-center">
                         <div className="relative w-full px-4 max-w-full flex-grow flex-1">
@@ -199,14 +253,21 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                             },
 
                             {
-                                render: ({ element: { angsuran } }) => {
-                                    return angsuran.length
-                                }
+                                render: ({ element : { angsuran } }) => (
+                                    <button
+                                        onClick={() => {
+                                            setOpenAngsuran(true)
+                                            setPinjamanId(angsuran.pinjaman_id)
+                                        }}
+                                    >
+                                        {angsuran.length}
+                                    </button>
+                                )
                             },
 
                             {
                                 render: ({ element: { angsuran } }) => {
-                                    return angsuran.filter(({ paided_at }) => paided_at != null).length
+                                    return angsuran.filter(({ paying_at }) => paying_at != null).length
                                 }
                             }
                         ]}

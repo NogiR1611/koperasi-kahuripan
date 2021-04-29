@@ -427,7 +427,7 @@ export default function CardTableAngsuran({ color,updateData }){
                             {
                                 render: ({ rowIndex }) => rowIndex + 1
                             },
-                            {
+                            { 
                                 render: ({ element: { pinjaman: { user: { name } } } }) => name,
                             },
                             {
