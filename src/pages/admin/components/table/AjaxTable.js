@@ -14,6 +14,7 @@ export default class AjaxTable extends React.Component {
         this.renderBody = this.renderBody.bind(this);
         this.renderNotFound = this.renderNotFound.bind(this);
         this.renderLoading = this.renderLoading.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
         this._fetchResponse = this._fetchResponse.bind(this);
     }
 
@@ -50,6 +51,21 @@ export default class AjaxTable extends React.Component {
                         )
                     }
                 </thead>
+            </>
+        )
+    }
+
+    renderFooter() {
+        const Footer = this.props.footer;
+        if (!Footer || (!this.state.response || !this.state.response.data.length)) {
+            return null
+        }
+
+        return (
+            <>
+                <tfoot>
+                    <Footer elements={this.state.response.data} />
+                </tfoot>
             </>
         )
     }
@@ -152,6 +168,7 @@ export default class AjaxTable extends React.Component {
                     {this.renderNotFound()}
                     {this.renderLoading()}
                 </tbody>
+                {this.renderFooter()}
             </>
         )
     }
