@@ -34,9 +34,9 @@ export default function PinjamanAnggota() {
     }
 
     client.post('/api/pinjaman',data)
-    .then(res => {
+    .then(() => {
       setName(0);
-      setDate(null);
+      setDate(timestamp("YYYY-MM-DD HH:mm:ss"));
       setJumlahPinjaman(null);
       setInstallments(null);
       setOpen(false);

@@ -139,6 +139,7 @@ export default class AjaxTable extends React.Component {
                                         }>
                                             {column.render ? column.render({
                                                 element,
+                                                elements: this.state.response.data,
                                                 rowIndex,
                                                 colIndex,
                                                 response: this.state.response

@@ -18,13 +18,8 @@ import './../../../../assets/style/style.css';
 export default function CardTablePinjamanAnggota({ color, updateData }) {
     const table = React.createRef();
     const [year, setYear] = React.useState(new Date().getFullYear());
-    const [angsuranYear,setAngsuranYear] = React.useState(new Date().getFullYear());
     const [month, setMonth] = React.useState(1);
-    const [angsuranMonth,setAngsuranMonth] = React.useState(1);
     const [pinjamanId,setPinjamanId] = React.useState(0);
-    const [amount, setAmount] = React.useState(0);
-    const [volunteer,setVolunteer] = React.useState(0);
-    const [payingAt, setPayingAt] = React.useState(null);
     const [openAngsuran,setOpenAngsuran] = React.useState(false);
     const onCloseAngsuran = () => setOpenAngsuran(false);
     
@@ -69,50 +64,27 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
             >
                 <Modal classNames="Modal" open={openAngsuran} onClose={onCloseAngsuran}>
                     <div className="max-w-screen-lg">
-                        <div className="rounded-t mb-0 px-4 py-3 border-0">
-                            <div className="flex flex-wrap items-center">
-                                <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                                    <h3
-                                        className={
-                                        "font-semibold text-lg " +
-                                        (color === "light" ? "text-blueGray-700" : "text-white")
-                                        }
-                                    >
-                                        Data Angsuran Anggota Per Tahun : <br/> <YearDropdown yearChange={({ target: { value } }) => 
-                                            setAngsuranYear(value)} 
-                                            yearValue={angsuranYear} />
-                                    </h3>
-                                </div>
-                                <div className="relative w-full px-4 max-w-full flex-grow flex-1">
-                                    <h3
-                                        className={
-                                        "font-semibold text-lg " +
-                                        (color === "light" ? "text-blueGray-700" : "text-white")
-                                        }
-                                    >
-                                        Data Angsuran Anggota Per {pinjamanId} Bulan : <br/> <MonthDropdown monthChange={(e) => setAngsuranMonth(e.target.value)} monthValue={angsuranMonth} />
-                                    </h3>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="block w-full overflow-x-auto">
+                        <div className="block w-full overflow-x-auto mt-10">
                             <AjaxTable
                                 ref={el => table.current = el}
-                                url={`/api/pinjaman?orderBy=borrowed_at%20asc&with=user;angsuran&search=id=${pinjamanId}`}
-                                headers={['No','Jumlah Angsuran','Sisa Pinjaman','Tanggal Jatuh Tempo']}
+                                url={`/api/angsuran?search=pinjaman_id=${pinjamanId}`}
+                                headers={['No','Jumlah Angsuran','Sukarela', 'Total Angsuran', 'Tanggal Jatuh Tempo']}
                                 color="light"
                                 columns={[
                                     {
                                         render: ({ rowIndex }) => rowIndex + 1
                                     },
                                     {
-                                        render: ({ element: { angsuran: { amount } } }) => currencyFormatter.format(amount,{ code: 'IDR' }),
+                                        render: ({ element: { amount }}) => currencyFormatter.format(amount,{ code: 'IDR' }),
                                     },
                                     {
-                                        render: () => '',
+                                        render: ({ element: { volunteer } }) => currencyFormatter.format(volunteer, { code: 'IDR' }),
                                     },
                                     {
-                                        render: ({ element: { angsuran: { paying_at } } }) => format(new Date(paying_at),'dd-MM-yyyy')
+                                        render: ({ element: { volunteer, amount } }) => currencyFormatter.format(amount + volunteer, { code: 'IDR' }),
+                                    },
+                                    {
+                                        render: ({ element : { paying_at } }) => format(new Date(paying_at),'dd-MM-yyyy')
                                     }
                                 ]}
                             />
@@ -224,8 +196,8 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                 <div className="block w-full overflow-x-auto mt-6">
                     <AjaxTable
                         ref={el => table.current = el}
-                        url={`/api/pinjaman?orderBy=\`borrowed_at\` asc&with=user;angsuran&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}`}
-                        headers={['No', 'Nama Anggota', 'Jumlah Pinjaman', 'Tanggal Pinjaman', 'Provisi', 'Kolektor', 'Angsuran', 'Keterangan']}
+                        url={`/api/pinjaman?orderBy=\`borrowed_at\` asc&with=user;user.group;user.group.user&search=YEAR (\`borrowed_at\`) = ${year};MONTH(\`borrowed_at\`) = ${month}&select=pinjaman.*;(select count(*) from angsuran where pinjaman_id = pinjaman.id) as installments;(select count(*) from angsuran where pinjaman_id = pinjaman.id and paided_at is not null) as paid_installments`}
+                        headers={['No', 'Nama Anggota', 'Kolektor', 'Jumlah Pinjaman', 'Provisi', 'Dana Diterima', 'Tanggal Pinjaman', 'Angsuran', 'Keterangan']}
                         color="light"
                         columns={[
                             {
@@ -237,11 +209,11 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                             },
 
                             {
-                                render: ({ element: { amount } }) => currencyFormatter.format(amount, { code: 'IDR' }),
+                                render: ({ element: { user: { group: { user: { name } } } } }) => name
                             },
 
                             {
-                                render: ({ element: { borrowed_at } }) => format(new Date(borrowed_at), 'dd-MM-yyyy')
+                                render: ({ element: { amount } }) => currencyFormatter.format(amount, { code: 'IDR' }),
                             },
 
                             {
@@ -249,25 +221,29 @@ export default function CardTablePinjamanAnggota({ color, updateData }) {
                             },
 
                             {
-                                render: () => ''
+                                render: ({ element: { amount, provision } }) => currencyFormatter.format(amount - provision, { code: 'IDR' })
                             },
 
                             {
-                                render: ({ element : { angsuran } }) => (
+                                render: ({ element: { borrowed_at } }) => format(new Date(borrowed_at), 'dd-MM-yyyy')
+                            },
+
+                            {
+                                render: ({ element : { installments, id } }) => (
                                     <button
                                         onClick={() => {
                                             setOpenAngsuran(true)
-                                            setPinjamanId(angsuran.pinjaman_id)
+                                            setPinjamanId(id)
                                         }}
                                     >
-                                        {angsuran.length}
+                                        {installments}
                                     </button>
                                 )
                             },
 
                             {
-                                render: ({ element: { angsuran } }) => {
-                                    return angsuran.filter(({ paying_at }) => paying_at != null).length
+                                render: ({ element: { paid_installments } }) => {
+                                    return paid_installments;
                                 }
                             }
                         ]}
