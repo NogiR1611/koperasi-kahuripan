@@ -15,6 +15,7 @@ export default function Kolektor() {
   const [kolektor,setKolektor] = React.useState('');
   const [password,setPassword] = React.useState(''); 
   const [confirmPassword,setConfirmPassword] = React.useState('');
+  const [updateData,setUpdateData] = React.useState(false);
   const [Notification,setNotification] = React.useState('');
   const [open,setOpen] = React.useState(false);
   const onOpenModal = () => setOpen(true);
@@ -129,7 +130,7 @@ export default function Kolektor() {
           />
             Generate PDF
           </button>
-          <CardTableKolektor color="light" />
+          <CardTableKolektor color="light" updateData={[updateData,setUpdateData]} />
         </div>
       </div>
     </>
