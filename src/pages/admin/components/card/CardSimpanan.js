@@ -171,13 +171,14 @@ export default function CardTableSimpananManasuka({ color, simpananType, shouldU
                     <AjaxTable
                         ref={component => table.current = component}
                         color="light"
-                        url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=sum(amount) as total_amount;\`simpanan\`.user_id;\`simpanan_last_month\`.\`total_amount\` as total_amount_last_month&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and MONTH(saved_at) = ${((month == 1) ? 12 : (month - 1))} and YEAR(saved_at) = ${((month == 1) ? (year - 1) : year)} group by user_id) simpanan_last_month.simpanan_last_month.user_id:=:simpanan.user_id`}
+                        url={`api/simpanan/?with=user&search=type_id=${simpananType.id} and MONTH(saved_at) = ${month} and YEAR(saved_at) = ${year}&select=CAST(sum(amount) as DECIMAL(9, 2)) as total_amount;\`simpanan\`.user_id;CAST(\`total_amount\`.\`total_amount\` as DECIMAL(9, 2)) as total_amount_before&groupBy=\`simpanan\`.\`user_id\`&leftJoin=(select sum(amount) as total_amount, user_id from simpanan where type_id = ${simpananType.id} and (MONTH(saved_at) < ${month} or YEAR(saved_at) < ${year}) group by user_id) total_amount.total_amount.user_id:=:simpanan.user_id`}
                         headers={
                             [
                                 'No',
                                 `Nama Anggota`,
-                                'Bulan Ini',
                                 'S/D Bulan Lalu',
+                                'Bulan Ini',
+                                'S/D Bulan Ini',
                             ]
                         }
                         columns={
@@ -189,11 +190,14 @@ export default function CardTableSimpananManasuka({ color, simpananType, shouldU
                                     render: ({ element }) => element.user.name
                                 },
                                 {
+                                    render: ({ element: { total_amount_before } }) => currencyFormatter.format(total_amount_before, { code: 'IDR' }),
+                                },
+                                {
                                     render: ({ element: { total_amount } }) => currencyFormatter.format(total_amount, { code: 'IDR' }),
                                 },
                                 {
-                                    render: ({ element: { total_amount_last_month } }) => currencyFormatter.format(total_amount_last_month, { code: 'IDR' }),
-                                },
+                                    render: ({ element: { total_amount_before, total_amount } }) =>  currencyFormatter.format(parseFloat(total_amount_before || 0) + parseFloat(total_amount), { code: 'IDR' })
+                                }
                             ]
                         }
                     />
