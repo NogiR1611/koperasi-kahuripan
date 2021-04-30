@@ -4,6 +4,7 @@ import PrivateRoute from '../../privateRoute.js';
 
 //views
 import Simpanan from './views/Simpanan';
+import SimpananType from './views/SimpananType';
 import DashboardAdmin from './views/dashboardAdmin.js';
 import Profil from './views/Profil.js';
 import Pemasukan from './views/Pemasukan.js';
@@ -45,6 +46,7 @@ function Admin(){
                     <PrivateRoute path='/admin/pemasukan' restricted={true} component={Pemasukan} />
                     <PrivateRoute path='/admin/pengeluaran' restricted={true} component={Pengeluaran} />
                     <PrivateRoute path='/admin/simpanan/:type' restricted={true} component={Simpanan} />
+                    <PrivateRoute path='/admin/simpanan-type' restricted={true} component={SimpananType} />
                     <PrivateRoute path='/admin/total-simpanan' restricted={true} component={TotalSimpanan} />
                     <PrivateRoute path='/admin/pinjaman-anggota' restricted={true} component={PinjamanAnggota} />
                     <PrivateRoute path='/admin/setoran' restricted={true} component={Setoran} />

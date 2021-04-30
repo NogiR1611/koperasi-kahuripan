@@ -58,7 +58,7 @@ export default function Simpanan({ match: { params: { type: simpanan_type_name }
     }, [open]);
 
     React.useEffect(() => {
-        client.get(`/api/simpanan_tipe?search=name = '${simpanan_type_name}'&limit=1`).then(({ data }) => {
+        client.get(`/api/simpanan_tipe?search=name = '${simpanan_type_name}'&limit=1`).then(({ data: { data } }) => {
             if (data.length) {
                 setSimpananType(data[0]);
             }

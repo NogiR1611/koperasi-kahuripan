@@ -95,8 +95,8 @@ export default function CardTableSimpananManasuka({ color, simpananType, shouldU
                         </div>
                     </form>
                 </Modal>
-                {Notification === "berhasil edit" ? <SuccessMessage text="Data berhasil di Edit" /> : null }
-                {Notification === "gagal edit" ? <ErrorMessage text="Maaf Data gagal di edit" /> : null }
+                {Notification === "berhasil edit" ? <SuccessMessage text="Data berhasil di Simpan" /> : null }
+                {Notification === "gagal edit" ? <ErrorMessage text="Maaf Data gagal di simpan" /> : null }
                 <Modal open={openEdit} onClose={onCloseEdit}>
                     <form className="bg-white px-8 pt-6 pb-8 mb-4">
                         <h3 className="text-center font-bold text-lg mb-2">Edit Data {simpananType.display_name}</h3>

@@ -10,7 +10,7 @@ export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
 
   React.useEffect(() => {
-    client.get('api/simpanan_tipe?select=name;display_name;id').then(({ data }) => setSimpananTypes(data)).catch(e => console.log(e))
+    client.get('api/simpanan_tipe?select=name;display_name;id').then(({ data: { data } }) => setSimpananTypes(data)).catch(e => console.log(e))
   }, []);
 
   return (
@@ -209,6 +209,27 @@ export default function Sidebar() {
                     }
                   ></i>{" "}
                   Total Simpanan
+                </Link>
+              </li>
+              <li className="items-center">
+                <Link
+                  className={
+                    "text-xs uppercase py-3 font-bold block " +
+                    (window.location.href.indexOf("/admin/simpanan-type") !== -1
+                      ? "text-lightBlue-500 hover:text-lightBlue-600"
+                      : "text-blueGray-700 hover:text-blueGray-500")
+                  }
+                  to="/admin/simpanan-type"
+                >
+                  <i
+                    className={
+                      "fas fa-table mr-2 text-sm " +
+                      (window.location.href.indexOf("/admin/simpanan-type") !== -1
+                        ? "opacity-75"
+                        : "text-blueGray-300")
+                    }
+                  ></i>{" "}
+                  Simpanan Tipe
                 </Link>
               </li>
               <hr className="my-2 md:min-w-full" />
