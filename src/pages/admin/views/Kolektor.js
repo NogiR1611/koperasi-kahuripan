@@ -1,7 +1,7 @@
 import React from "react";
 import 'react-responsive-modal/styles.css';
 import {Modal} from "react-responsive-modal";
-import KolektorPDF from "./../GeneratorPDF/KolektorPDF.js";
+import KolektorPdf from "../GeneratorPDF/KolektorPdf.js";
 import SuccessMessage from "./../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../components/Notification/ErrorMessage.js";
  
@@ -11,8 +11,8 @@ import CardTableKolektor from "../components/card/CardTableKolektor.js";
 import client from "../../../client";
  
 export default function Kolektor() {
-  const [item,setItem] = React.useState([]);
   const [user,setUser] = React.useState([]);
+  const [items,setItems] = React.useState([]);
   const [displayName,setDisplayName] = React.useState(0);
   const [kolektorName,setKolektorName] = React.useState(null);
   const [openKolektor,setOpenKolektor] = React.useState(false);
@@ -42,12 +42,22 @@ export default function Kolektor() {
   },[]);
 
   React.useEffect(() => {
-    client.get(`/api/user?with=group&token=${token}`)
+    client.get(`/api/groups?select=groups.*;(select count(*) from users where group_id = groups.id) as users_count&token=${token}`)
     .then( res => {
         const {data} = res.data;
-        setUser(data);
+        console.log(data);
+        setItems(data);
     })
     .catch( err => console.log(err))
+  },[]);
+
+  React.useEffect(() => {
+    client.get(`/api/user?with=group&token=${token}`)
+    .then( res => {
+      const {data} = res.data;
+      setUser(data);
+    })
+    .catch( err => console.log(err));
   },[]);
 
   return (
@@ -109,7 +119,7 @@ export default function Kolektor() {
           <button
             className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 rounded inline-flex items-center"
             type="button"
-            onClick={() => KolektorPDF(item)}
+            onClick={() => KolektorPdf(items)}
           >
           <img 
             src={require("./../../../assets/admin/icon/pdf.png").default}

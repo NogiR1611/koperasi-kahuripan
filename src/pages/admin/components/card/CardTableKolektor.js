@@ -17,6 +17,7 @@ export default function CardTableKolektor({ color,updateData }){
     const mmnt = moment();
     const table = React.createRef();
     const [user,setUser] = React.useState([]);
+    const [status,setStatus] = React.useState(null);
     const [itemPdf,setItemPdf] = React.useState([]);
     const [groupId, setGroupId] = React.useState(null);
     const [userId,setUserId] = React.useState(null);
@@ -95,10 +96,11 @@ export default function CardTableKolektor({ color,updateData }){
     }
 
     const inactiveItem = (userId) => {
+        setStatus(status => !status);
         const data = {
             username : name,
             role_id : role,
-            status : "inactive"
+            status : status
         }
 
         client.put(`/api/user/${userId}`,data)
@@ -130,6 +132,18 @@ export default function CardTableKolektor({ color,updateData }){
     },[]);
 
     React.useEffect(() => {
+        client.get(`/api/user?token=${token}`)
+        .then( res => {
+            const {data} = res.data;
+            console.log(data);
+            setItemPdf(data);
+        })
+        .catch( err => console.log(err));
+    },[]);
+
+    const reportAnggota = itemPdf.filter( element => element.group_id === groupId );
+
+    React.useEffect(() => {
         client.get(`/api/groups?select=groups.*;(select count(*) from users where group_id = groups.id) as users_count&token=${token}`)
         .then( res => {
             const {data} = res.data;
@@ -137,7 +151,6 @@ export default function CardTableKolektor({ color,updateData }){
         })
         .catch( err => console.log(err))
     },[]);
-
 
     return (
         <>
@@ -152,8 +165,8 @@ export default function CardTableKolektor({ color,updateData }){
                     -active or inactive anggota
                     -edit anggota
                     -edit kolektor
+                    -add anggota
                     -display anggota
-                    -add kolektor
                 */}
                 <Modal center open={openActive} onClose={onCloseActive}>
                     <form className="bg-white px-8 pt-6 pb-8 mb-4">
@@ -163,8 +176,8 @@ export default function CardTableKolektor({ color,updateData }){
                                 className="inline-block px-2 py-2 mx-14 rounded-lg bg-green-400 transition duration-500 ease-in-out shadow-md font-bold hover:bg-green-700"
                                 type="button"
                                 onClick={() => {
-                                    inactiveItem(userId)
-                                    setOpenActive(false)
+                                    setStatus(false)
+                                    console.log(status)
                                 }
                             }>
                                 Iya
@@ -314,15 +327,7 @@ export default function CardTableKolektor({ color,updateData }){
                         <button
                             className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 rounded inline-flex items-center"
                             type="button"
-                            onClick={() => {
-                                client.get(`/api/user?search=group_id=${groupId}&token=${token}`)
-                                .then( res => {
-                                    const {data} = res.data;
-                                    setItemPdf(data);
-                                })
-                                .catch( err => console.log(err));
-                                AnggotaPdf(itemPdf)
-                            }}
+                            onClick={() => AnggotaPdf(reportAnggota)}
                         >
                         <img 
                             src={require("./../../../../assets/admin/icon/pdf.png").default}
@@ -351,7 +356,7 @@ export default function CardTableKolektor({ color,updateData }){
                                         render: ({ element: { status } }) => status
                                     },
                                     {
-                                        render: ({ element: { id,username,role_id,created_at }}) => (
+                                        render: ({ element: { id,username,role_id,status,created_at }}) => (
                                             <>
                                                 <button
                                                     className="mx-3"
@@ -371,6 +376,7 @@ export default function CardTableKolektor({ color,updateData }){
                                                         setOpenActive(true)
                                                         setRole(role_id)
                                                         setUserId(id)
+                                                        setStatus(true)
                                                     }}
                                                 >
                                                     Nonaktif
@@ -411,7 +417,7 @@ export default function CardTableKolektor({ color,updateData }){
                                     render: ({ element : { display_name } }) => display_name,
                                 },
                                 {
-                                    render: ({ element : { id, users_count} }) => (
+                                    render: ({ element : { id, users_count } }) => (
                                         <>
                                             <button
                                                 className="border border-blueGray-500 rounded-lg p-2"
