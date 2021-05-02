@@ -5,7 +5,7 @@ import client from '../../../../client';
 import AjaxTable from './../table/AjaxTable.js';
 import 'react-responsive-modal/styles.css';
 import AnggotaPdf from "./../../GeneratorPDF/AnggotaPdf.js";
-import { format } from "date-fns";
+import {format} from "date-fns";
 import {Modal} from "react-responsive-modal";
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
@@ -17,7 +17,7 @@ export default function CardTableKolektor({ color,updateData }){
     const mmnt = moment();
     const table = React.createRef();
     const [user,setUser] = React.useState([]);
-    const [status,setStatus] = React.useState(null);
+    const [inStatus,setInStatus] = React.useState(true);
     const [itemPdf,setItemPdf] = React.useState([]);
     const [groupId, setGroupId] = React.useState(null);
     const [userId,setUserId] = React.useState(null);
@@ -96,11 +96,10 @@ export default function CardTableKolektor({ color,updateData }){
     }
 
     const inactiveItem = (userId) => {
-        setStatus(status => !status);
         const data = {
             username : name,
             role_id : role,
-            status : status
+            status : 'inactive'
         }
 
         client.put(`/api/user/${userId}`,data)
@@ -175,11 +174,12 @@ export default function CardTableKolektor({ color,updateData }){
                             <button
                                 className="inline-block px-2 py-2 mx-14 rounded-lg bg-green-400 transition duration-500 ease-in-out shadow-md font-bold hover:bg-green-700"
                                 type="button"
-                                onClick={() => {
-                                    setStatus(false)
-                                    console.log(status)
-                                }
-                            }>
+                                onClick={() => {    
+                                    setInStatus('inactive')
+                                    console.log(inStatus)
+                                    inactiveItem(userId)
+                                    setOpenActive(false)
+                                }}>
                                 Iya
                             </button>
                             <button
@@ -312,7 +312,7 @@ export default function CardTableKolektor({ color,updateData }){
                     {notification === "berhasil edit anggota" ? <SuccessMessage text="Data berhasil di Edit" /> : null }
                     {notification === "gagal edit anggota" ? <ErrorMessage text="Mohon Lengkapi Formulir Anda" /> : null }
                     <div className="max-w-screen-lg">
-                        <h3 className="text-center font-bold text-lg mb-2">Data Anggota {groupId}</h3>
+                        <h3 className="text-center font-bold text-lg mb-2">Data Anggota</h3>
                         <button
                             className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-gray-700 hover:text-gray-200 py-2 px-2 rounded inline-flex items-center"
                             onClick={() => setOpenAddAnggota(true)}
@@ -374,12 +374,13 @@ export default function CardTableKolektor({ color,updateData }){
                                                     className="mx-3"
                                                     onClick={() => {
                                                         setOpenActive(true)
+                                                        setName(username)
                                                         setRole(role_id)
                                                         setUserId(id)
-                                                        setStatus(true)
+                                                        setInStatus(status);
                                                     }}
                                                 >
-                                                    Nonaktif
+                                                    { status === 'active' ? 'Nonaktifkan' : 'Aktifkan' }
                                                 </button>
                                             </>
                                         )

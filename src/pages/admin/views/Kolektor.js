@@ -114,19 +114,19 @@ export default function Kolektor() {
                 className="w-btn-add mr-1"
                 alt=""
             />
-            Tambah
+            Tambah Kolektor
           </button>
           <button
             className="bg-white transition duration-500 ease-in-out shadow-md font-bold hover:bg-blue-700 hover:text-gray-200 py-2 px-4 ml-4 rounded inline-flex items-center"
             type="button"
             onClick={() => KolektorPdf(items)}
           >
-          <img 
-            src={require("./../../../assets/admin/icon/pdf.png").default}
-            className="w-btn-add mr-1"
-            alt=""
-          />
-            Generate PDF
+              <img 
+                src={require("./../../../assets/admin/icon/pdf.png").default}
+                className="w-btn-add mr-1"
+                alt=""
+              />
+              Generate PDF
           </button>
           {Notification === "berhasil tambah" ? <SuccessMessage text="Data Berhasil Ditambahkan" /> : ''}
           {Notification === "gagal tambah" ? <ErrorMessage text="Data Gagal Ditambahkan" /> : ''}
