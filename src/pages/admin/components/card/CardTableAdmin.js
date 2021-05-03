@@ -9,7 +9,6 @@ import {Modal} from "react-responsive-modal";
 import {format} from "date-fns";
 import SuccessMessage from "./../../components/Notification/SuccessMessage.js";
 import ErrorMessage from "./../../components/Notification/ErrorMessage.js";
-import { setDate } from 'date-fns/fp';
 
 //components
 // import TableDropdown from './dropdown/TableDropdown.js';

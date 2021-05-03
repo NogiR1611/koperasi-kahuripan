@@ -17,6 +17,7 @@ export default function DataAdmin() {
     const [updateData,setUpdateData] = React.useState(false);
     const [Notification,setNotification] = React.useState('');
     const [idName,setIdName] = React.useState(0);
+    const [image,setImage] = React.useState(null);
     const [openAdmin,setOpenAdmin] = React.useState(false);
     const [openKolektor,setOpenKolektor] = React.useState(false);
     const [username,setUsername] = React.useState('');
@@ -109,15 +110,15 @@ export default function DataAdmin() {
                                 />
                             </div>
                             <div className="mb-6">
-                            <label className="text-gray-700 text-sm font-bold mb-2">Konfirmasi Password : </label>
-                            <input
-                                onChange={ (e) => setConfirmPassword(e.target.value) }
-                                className="w-full rounded-lg border-2"
-                                type="password"
-                                id="confirm_password"
-                                name="confirm_password"
-                            />
-                        </div> 
+                                <label className="text-gray-700 text-sm font-bold mb-2">Konfirmasi Password : </label>
+                                <input
+                                    onChange={ (e) => setConfirmPassword(e.target.value) }
+                                    className="w-full rounded-lg border-2"
+                                    type="password"
+                                    id="confirm_password"
+                                    name="confirm_password"
+                                />
+                            </div>
                         <div className="flex items-center justify-between">
                         <button
                             onClick={register}

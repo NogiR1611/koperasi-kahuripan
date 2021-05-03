@@ -18,6 +18,8 @@ const LoginAdmin = (props) => {
         .then( res => {
             if(res.status === 200){
                 let user = {
+                    id : res.data.data.id,
+                    role_id : res.data.data.role_id,
                     username : username,
                     isLoggedIn : true
                 };
